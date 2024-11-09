@@ -7,7 +7,38 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Mediatr\Users\Commands\" />
+    <Folder Include="Features\Mediatr\Users\Handlers\Read\" />
+    <Folder Include="Features\Mediatr\Users\Handlers\Write\" />
+    <Folder Include="Features\Mediatr\Users\Queries\" />
+    <Folder Include="Features\Mediatr\Users\Results\" />
+    <Folder Include="Features\Mediatr\Recipes\Handlers\Read\" />
+    <Folder Include="Features\Mediatr\Recipes\Queries\" />
+    <Folder Include="Features\Mediatr\Recipes\Results\" />
+    <Folder Include="Features\Mediatr\RecipeMaterials\Commands\" />
+    <Folder Include="Features\Mediatr\RecipeMaterials\Handlers\Read\" />
+    <Folder Include="Features\Mediatr\RecipeMaterials\Handlers\Write\" />
+    <Folder Include="Features\Mediatr\RecipeMaterials\Queries\" />
+    <Folder Include="Features\Mediatr\RecipeMaterials\Results\" />
+    <Folder Include="Features\Mediatr\Roles\Commands\" />
+    <Folder Include="Features\Mediatr\Roles\Handlers\Read\" />
+    <Folder Include="Features\Mediatr\Roles\Handlers\Write\" />
+    <Folder Include="Features\Mediatr\Roles\Queries\" />
+    <Folder Include="Features\Mediatr\Roles\Results\" />
+    <Folder Include="Tools\" />
   </ItemGroup>
 
 </Project>
