@@ -1,0 +1,31 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html  lang="en">
+
+@await Component.InvokeAsync("_HeaderUILayoutComponentPartial");
+<body>
+    <!-- header-start -->
+    @await Component.InvokeAsync("_HeadUILayoutComponentPartial");
+    <!-- header-end -->
+
+    <!-- slider_area_start -->
+    @await Component.InvokeAsync("_SliderUILayoutComponentPartial");
+    <!-- slider_area_end -->
+
+    @RenderBody()
+
+    <!-- footer  -->
+    @await Component.InvokeAsync("_FooterUILayoutComponentPartial");
+    <!--/ footer  -->
+
+    <!-- JS here -->
+    @await Component.InvokeAsync("_ScriptsUILayoutComponentPartial");
+</body>
+
+</html>
+
+
