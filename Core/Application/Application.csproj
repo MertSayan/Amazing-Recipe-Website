@@ -25,9 +25,6 @@
     <Folder Include="Features\Mediatr\Users\Handlers\Write\" />
     <Folder Include="Features\Mediatr\Users\Queries\" />
     <Folder Include="Features\Mediatr\Users\Results\" />
-    <Folder Include="Features\Mediatr\Recipes\Handlers\Read\" />
-    <Folder Include="Features\Mediatr\Recipes\Queries\" />
-    <Folder Include="Features\Mediatr\Recipes\Results\" />
     <Folder Include="Features\Mediatr\RecipeMaterials\Commands\" />
     <Folder Include="Features\Mediatr\RecipeMaterials\Handlers\Read\" />
     <Folder Include="Features\Mediatr\RecipeMaterials\Handlers\Write\" />
