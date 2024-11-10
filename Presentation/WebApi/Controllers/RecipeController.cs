@@ -25,6 +25,12 @@ namespace WebApi.Controllers
            var values= await _mediator.Send(new GetRecipeQuery());
             return Ok(values);
         }
+        [HttpGet("RecipeById")]
+        public async Task<IActionResult> GetRecipeById(int id)
+        {
+            var values = await _mediator.Send(new GetRecipeByIdQuery(id));
+            return Ok(values);
+        }
         [HttpPost]
         public async Task<IActionResult> CreateRecipe(CreateRecipeCommand command)
         {

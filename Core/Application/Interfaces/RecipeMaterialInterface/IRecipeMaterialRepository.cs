@@ -11,11 +11,9 @@ namespace Application.Interfaces.RecipeMaterialInterface
 {
     public interface IRecipeMaterialRepository
     {
-        //Task<List<RecipeMaterial>> GetByFilterAsync(Expression<Func<RecipeMaterial, bool>> filter);
-
-        //Task RemoveAsync(RecipeMaterial recipeMaterial);
         Task DeleteByRecipeIdAsync(int recipeId);
 
         Task<List<GetRecipeQueryResult>> GetAllRecipeMaterialWithRecipesAndUsers();
+        Task<GetRecipeByIdQueryResult> GetRecipeByIdAsync(int recipeId);
     }
 }

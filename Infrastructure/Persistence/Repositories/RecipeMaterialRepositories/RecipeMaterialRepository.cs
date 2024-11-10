@@ -30,7 +30,6 @@ namespace Persistence.Repositories.RecipeMaterialRepositories
             await _context.SaveChangesAsync();
         }
 
-        //bu işime yaramıyor sanırım sileriz bir ara
         public async Task<List<GetRecipeQueryResult>> GetAllRecipeMaterialWithRecipesAndUsers()
         {
             var values = await _context.RecipeMaterials
@@ -43,7 +42,7 @@ namespace Persistence.Repositories.RecipeMaterialRepositories
 
             var results = new List<GetRecipeQueryResult>();
 
-            var groupedRecipes = values.GroupBy(rm => rm.Recipe);
+            var groupedRecipes = values.GroupBy(rm => rm.Recipe).OrderBy(group => group.Key.RecipeID);
 
             foreach (var group in groupedRecipes)
             {
@@ -66,19 +65,37 @@ namespace Persistence.Repositories.RecipeMaterialRepositories
             return results;
         }
 
-        //public async Task<List<RecipeMaterial>> GetByFilterAsync(Expression<Func<RecipeMaterial, bool>> filter)
-        //{
-        //    var values=await _context.RecipeMaterials
-        //        .Include(x=>x.Recipe)
-        //        .Where(filter).ToListAsync();
-        //    return values;
-        //}
+        public async Task<GetRecipeByIdQueryResult> GetRecipeByIdAsync(int recipeId)
+        {
+            var values = await _context.RecipeMaterials
+                  .Include(x => x.Recipe)
+                      .ThenInclude(x => x.User)
+                  .Include(x => x.Recipe.Category)
+                  .Include(x => x.Material)
+                  .Where(x => x.DeletedDate == null && x.RecipeId == recipeId)
+                  
+                  .ToListAsync();
 
-        //public async Task RemoveAsync(RecipeMaterial recipeMaterial)
-        //{
+            var recipe = values.Select(x => x.Recipe).FirstOrDefault();
 
-        //    _context.RecipeMaterials.Remove(recipeMaterial);
-        //    await _context.SaveChangesAsync(); // Veritabanına değişiklikleri kaydet
-        //}
+            if (recipe == null)
+            {
+                return null; // Tarif bulunamadıysa null döndürülür.
+            }
+
+            // Sonuçları alıyoruz
+            var result = new GetRecipeByIdQueryResult
+            {
+                Id = recipe.RecipeID,
+                Title = recipe.Title,
+                Description = recipe.Description,
+                CategoryName = recipe.Category?.Name,
+                RecipeImageUrl = recipe.RecipeImageUrl,
+                UserName = recipe.User?.Name + " " + recipe.User?.Surname,
+                Materials = values.Select(x => x.Material.MaterialName).Distinct().ToList() // Malzemelerin adlarını alıyoruz
+            };
+
+            return result;
+        }
     }
 }

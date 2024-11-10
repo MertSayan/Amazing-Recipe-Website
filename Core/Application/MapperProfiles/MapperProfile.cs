@@ -1,4 +1,8 @@
-﻿using AutoMapper;
+﻿using Application.Enums;
+using Application.Features.Mediatr.Users.Commands;
+using Application.Features.Mediatr.Users.Results;
+using AutoMapper;
+using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +15,12 @@ namespace Application.MapperProfiles
     {
         public MapperProfile()
         {
-            
+            CreateMap<User, CreateUserCommand>().ReverseMap()
+               .ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => Rol.Kullanıcı));
+            CreateMap<User, UpdateUserCommand>().ReverseMap();
+            CreateMap<User,GetUserQueryResult>().ReverseMap();
+            CreateMap<User,GetUserByIdQueryResult>().ReverseMap();
+
         }
     }
 }
