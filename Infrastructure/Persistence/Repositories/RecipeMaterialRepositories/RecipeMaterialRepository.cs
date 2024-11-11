@@ -37,7 +37,8 @@ namespace Persistence.Repositories.RecipeMaterialRepositories
                      .ThenInclude(x => x.User)
                  .Include(x => x.Recipe.Category)
                  .Include(x => x.Material)
-                 .Where(x => x.DeletedDate == null)
+                 .Where(x => x.DeletedDate == null
+                 && x.Recipe.DeletedDate == null )
                  .ToListAsync();
 
             var results = new List<GetRecipeQueryResult>();

@@ -28,8 +28,8 @@ namespace WebApi.Controllers
         [HttpGet("RecipeById")]
         public async Task<IActionResult> GetRecipeById(int id)
         {
-            var values = await _mediator.Send(new GetRecipeByIdQuery(id));
-            return Ok(values);
+            var value = await _mediator.Send(new GetRecipeByIdQuery(id));
+            return Ok(value);
         }
         [HttpGet("TopRatedRecipes")]
         public async Task<IActionResult> GetTopRatedRecipes()

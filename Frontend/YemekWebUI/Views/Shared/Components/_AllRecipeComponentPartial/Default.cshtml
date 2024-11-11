@@ -1,0 +1,28 @@
+﻿@model List<ResultAllRecipeDto>
+
+<div class="recepie_area plus_padding">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single_recepie text-center">
+                        <div class="recepie_thumb">
+                            <img src="@item.RecipeImageUrl" alt="">
+                        </div>
+                        <h3>@item.Title</h3>
+                        <p>
+                            @(
+                                item.Description.Length > 50
+                                ? item.Description.Substring(0, 50) + "..."
+                                : item.Description
+                                )
+                        </p>
+                        <p>@item.Username</p>
+                        <a href="#" class="line_btn">Tarifin Tamamını Gör</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
