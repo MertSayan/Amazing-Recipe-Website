@@ -1,6 +1,7 @@
 
 using Application.Interfaces;
 using Application.Interfaces.RateInterface;
+using Application.Interfaces.RecipeInterface;
 using Application.Interfaces.RecipeMaterialInterface;
 using Application.Servicess;
 using AutoMapper;
@@ -8,6 +9,7 @@ using Persistence.Context;
 using Persistence.Repositories;
 using Persistence.Repositories.RateRepositories;
 using Persistence.Repositories.RecipeMaterialRepositories;
+using Persistence.Repositories.RecipeRepositories;
 
 namespace WebApi
 {
@@ -23,6 +25,7 @@ namespace WebApi
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped(typeof(IRateRepository), typeof(RateRepository));
             builder.Services.AddScoped(typeof(IRecipeMaterialRepository), typeof(RecipeMaterialRepository));
+            builder.Services.AddScoped(typeof(IRecipeRepository), typeof(RecipeRepository));
 
             builder.Services.AddSaveApplicationService();
 

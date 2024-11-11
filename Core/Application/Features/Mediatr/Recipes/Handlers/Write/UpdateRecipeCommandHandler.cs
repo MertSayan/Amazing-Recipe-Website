@@ -34,23 +34,23 @@ namespace Application.Features.Mediatr.Recipes.Handlers.Write
             string photoPath = null;
             if (request.RecipeImage != null && request.RecipeImage.Length > 0)
             {
-                var uploadsFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "recipes");
+                var uploadsFolderPath = Path.Combine("C:\\csharpprojeler\\YemekUygulaması\\Frontend\\YemekWebUI", "wwwroot", "recipes");
+
                 if (!Directory.Exists(uploadsFolderPath))
                 {
                     Directory.CreateDirectory(uploadsFolderPath);
                 }
-
                 var fileExtension = Path.GetExtension(request.RecipeImage.FileName);
+
                 var uniqueFileName = $"{Guid.NewGuid()}_{request.Title}{fileExtension}";
+
                 var filePath = Path.Combine(uploadsFolderPath, uniqueFileName);
 
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await request.RecipeImage.CopyToAsync(fileStream);
                 }
-
                 photoPath = $"/recipes/{uniqueFileName}";
-
             }
 
             var value= await _repository.GetByIdAsync(request.RecipeID);

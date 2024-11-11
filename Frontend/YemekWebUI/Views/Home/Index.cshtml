@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+
+@await Component.InvokeAsync("_RecipeAreaComponentPartial");
+
+@await Component.InvokeAsync("_RecipeServiceComponentPartial");
+
+@await Component.InvokeAsync("_DiscoverRecipesComponentPartial");
+

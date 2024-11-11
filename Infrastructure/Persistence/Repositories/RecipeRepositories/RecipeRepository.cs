@@ -26,5 +26,34 @@ namespace Persistence.Repositories.RecipeRepositories
             //    .Include(x => x.)
             return null;
         }
+
+        public async Task<List<GetTopRatedRecipeQueryResult>> GetTopRatedRecipes(int topCount)
+        {
+            var topRecipes = await _context.Rates
+            .Where(x=>x.DeletedDate==null)
+            .GroupBy(r => r.RecipeId) // RecipeId'ye göre gruplama
+            .Select(g => new
+            {
+                RecipeId = g.Key,
+                AverageScore = g.Average(r => r.Score) // Ortalama puanı hesaplama
+            })
+            .OrderByDescending(x => x.AverageScore) // En yüksekten en düşüğe sıralama
+            
+            .Take(topCount) // İlk n tarif seçme
+            
+            .Join(_context.Recipes, // Recipe tablosu ile birleştirme
+                  r => r.RecipeId,
+                  recipe => recipe.RecipeID,
+                  (r, recipe) => new GetTopRatedRecipeQueryResult   
+                  {
+                      RecipeId= recipe.RecipeID,
+                      Title = recipe.Title,
+                      Description = recipe.Description,
+                      RecipeImageUrl=recipe.RecipeImageUrl
+                  })
+            .ToListAsync();
+
+            return topRecipes;
+        }
     }
 }

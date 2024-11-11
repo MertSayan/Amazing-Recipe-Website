@@ -18,28 +18,38 @@ namespace Application.Features.Mediatr.Recipes.Handlers.Write
 
         public async Task Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
         {
+
             string photoPath = null;
             if (request.RecipeImage != null && request.RecipeImage.Length > 0)
             {
-                var uploadsFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "recipes");
+                // MVC katmanındaki wwwroot/recipes dizinine kaydetmek için tam yolu belirtin
+                var uploadsFolderPath = Path.Combine("C:\\csharpprojeler\\YemekUygulaması\\Frontend\\YemekWebUI", "wwwroot", "recipes");
+
+                // Eğer "recipes" klasörü yoksa oluşturuluyor
                 if (!Directory.Exists(uploadsFolderPath))
                 {
                     Directory.CreateDirectory(uploadsFolderPath);
                 }
 
+                // Dosya uzantısını alıyoruz
                 var fileExtension = Path.GetExtension(request.RecipeImage.FileName);
-                var uniqueFileName = $"{Guid.NewGuid()}_{request.Title}{fileExtension}"; 
+
+                // Benzersiz bir dosya adı oluşturuyoruz
+                var uniqueFileName = $"{Guid.NewGuid()}_{request.Title}{fileExtension}";
+
+                // Dosya yolunu oluşturuyoruz
                 var filePath = Path.Combine(uploadsFolderPath, uniqueFileName);
 
+                // Dosyayı kaydediyoruz
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await request.RecipeImage.CopyToAsync(fileStream);
                 }
 
+                // MVC projesinde erişilebilir hale getirmek için dosya yolunu ayarlayın
                 photoPath = $"/recipes/{uniqueFileName}";
-
-                
             }
+
             var recipe = new Recipe
             {
                 MaterialList = new List<RecipeMaterial>(),

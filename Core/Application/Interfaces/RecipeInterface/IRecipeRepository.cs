@@ -11,5 +11,6 @@ namespace Application.Interfaces.RecipeInterface
     public interface IRecipeRepository
     {
         Task<List<GetRecipeQueryResult>> GetAllRecipe();
+        Task<List<GetTopRatedRecipeQueryResult>> GetTopRatedRecipes(int topCount);
     }
 }
