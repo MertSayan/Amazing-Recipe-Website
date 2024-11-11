@@ -36,6 +36,7 @@ namespace Persistence.Context
         public DbSet<RecipeMaterial> RecipeMaterials { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<About> Abouts { get; set; }
 
     }
 }

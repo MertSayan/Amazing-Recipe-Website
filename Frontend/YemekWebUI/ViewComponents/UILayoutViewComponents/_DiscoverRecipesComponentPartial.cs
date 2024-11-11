@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace YemekWebUI.ViewComponents.HomeViewComponents
+namespace YemekWebUI.ViewComponents.UILayoutViewComponents
 {
     public class _DiscoverRecipesComponentPartial:ViewComponent
     {

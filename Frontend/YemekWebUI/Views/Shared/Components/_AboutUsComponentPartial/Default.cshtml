@@ -1,0 +1,32 @@
+﻿@model List<ResultAboutDto>
+
+<div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="bradcam_text text-center">
+                    <h3>Hakkımızda</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@foreach(var item in Model)
+{
+    <div class="recepie_header_area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10">
+                    <div class="recepie_text text-center">
+                        <h3>
+                           Biz Kimiz ?
+                        </h3>
+                        <p>@item.Description</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

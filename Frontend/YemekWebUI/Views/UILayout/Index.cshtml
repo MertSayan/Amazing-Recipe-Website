@@ -18,6 +18,8 @@
 
     @RenderBody()
 
+    @await Component.InvokeAsync("_DiscoverRecipesComponentPartial");
+
     <!-- footer  -->
     @await Component.InvokeAsync("_FooterUILayoutComponentPartial");
     <!--/ footer  -->
