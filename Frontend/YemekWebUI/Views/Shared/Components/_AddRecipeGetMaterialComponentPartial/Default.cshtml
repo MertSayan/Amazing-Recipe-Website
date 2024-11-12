@@ -1,0 +1,10 @@
+﻿@model List<ResultAllMaterialDto>
+<div class="input-group-icon mt-10">
+    <div class="icon"></div>
+    <select class="form-select" id="default-select">
+        @foreach(var item in Model)
+        {
+            <option value="@item.MaterialId">@item.MaterialName</option>
+        }
+    </select>
+</div>

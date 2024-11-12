@@ -21,6 +21,9 @@ namespace Application.MapperProfiles
             CreateMap<User,GetUserQueryResult>().ReverseMap();
             CreateMap<User,GetUserByIdQueryResult>().ReverseMap();
 
+            CreateMap<GetUserByMailAndPasswordQueryResult, User>().ReverseMap()
+               .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name));
+
         }
     }
 }

@@ -20,6 +20,8 @@ namespace YemekWebUI
             }
 
             app.UseHttpsRedirection();
+
+            //bazý fotolarýn cash den gelmesini saðlamak için buranýn içerisine birtakým þeyler yapabiliyoruz. araþtýr. hoca anlattý hafta7
             app.UseStaticFiles();
 
             app.UseRouting();
