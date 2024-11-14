@@ -11,5 +11,10 @@ namespace Application.Features.Mediatr.Rates.Results
         public int RateId { get; set; }
         public string RecipeName { get; set; }
         public int Score { get; set; }
+
+        public int RecipeID { get; set; }
+
+        public string RecipeImageUrl { get; set; }
+        
     }
 }

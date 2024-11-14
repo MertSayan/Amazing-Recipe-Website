@@ -12,5 +12,6 @@ namespace Application.Interfaces.RecipeInterface
     {
         Task<List<GetRecipeQueryResult>> GetAllRecipe();
         Task<List<GetTopRatedRecipeQueryResult>> GetTopRatedRecipes(int topCount);
+        Task<List<Recipe>> GetRecipeByUserId (int userId);
     }
 }

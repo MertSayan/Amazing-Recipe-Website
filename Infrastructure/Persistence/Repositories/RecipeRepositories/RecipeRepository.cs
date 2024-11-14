@@ -27,6 +27,14 @@ namespace Persistence.Repositories.RecipeRepositories
             return null;
         }
 
+        public async Task<List<Recipe>> GetRecipeByUserId(int userId)
+        {
+            var recipes=await _context.Recipes
+                .Where(x=>x.UserId == userId && x.DeletedDate==null)
+                .ToListAsync();
+            return recipes;
+        }
+
         public async Task<List<GetTopRatedRecipeQueryResult>> GetTopRatedRecipes(int topCount)
         {
             var topRecipes = await _context.Rates

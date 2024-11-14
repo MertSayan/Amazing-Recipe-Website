@@ -27,6 +27,8 @@ namespace Application.Features.Mediatr.Rates.Handlers.Read
                 RateId=x.RateId,
                 RecipeName=x.Recipe.Title,
                 Score=x.Score,
+                RecipeID=x.Recipe.RecipeID,
+                RecipeImageUrl=x.Recipe.RecipeImageUrl
             }).ToList();
         }
     }

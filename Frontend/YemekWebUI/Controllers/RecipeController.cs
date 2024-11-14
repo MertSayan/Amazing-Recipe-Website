@@ -4,9 +4,12 @@ using System.Net.Http;
 using System.Net;
 using YemekUygulamasıDto.RecipeDtos;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace YemekWebUI.Controllers
 {
+    [Authorize(Roles = "Kullanıcı")]
+
     public class RecipeController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

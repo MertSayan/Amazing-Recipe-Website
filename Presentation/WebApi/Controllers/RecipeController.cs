@@ -37,6 +37,14 @@ namespace WebApi.Controllers
             var values = await _mediator.Send(new GetTopRatedRecipeQuery());
             return Ok(values);
         }
+
+        [HttpGet("GetRecipeByUserIdQuery")]
+        public async Task<IActionResult> GetRecipeByUserIdQuery(int id)
+        {
+            var values = await _mediator.Send(new GetRecipeByUserIdQuery(id));
+            return Ok(values);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateRecipe(CreateRecipeCommand command)
         {
@@ -55,5 +63,6 @@ namespace WebApi.Controllers
             await _mediator.Send(new RemoveRecipeCommand(id));
             return Ok(Messages<Recipe>.EntityDeleted);
         }
+        
     }
 }

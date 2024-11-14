@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+@await Component.InvokeAsync("_ProfileInformationComponentPartial", new { id = Convert.ToInt32(ViewBag.userId) });
+@await Component.InvokeAsync("_ProfileOwnerRecipesComponentPartial", new { id = Convert.ToInt32(ViewBag.userId) });
+@await Component.InvokeAsync("_ProfileRatedRecipesComponentPartial", new { id = Convert.ToInt32(ViewBag.userId) });
+
