@@ -1,0 +1,33 @@
+﻿@model CreateLoginDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<div class="login-container">
+    <h2>Hesabınıza Giriş Yapın</h2>
+    <form class="Index" method="post">
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" placeholder="Mailini Gir" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" type="password" class="form-control" placeholder="Şifreyi Gir" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-custom btn-block w-100">Giriş Yap</button>
+    </form>
+
+    <div class="text-center mt-3">
+        <a asp-action="ForgotPassword" class="text-decoration-none">Şifremi unuttum</a> |
+        <a asp-action="Register" class="text-decoration-none">Kaydol</a>
+    </div>
+</div>
+
+
+
+

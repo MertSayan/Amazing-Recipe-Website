@@ -19,6 +19,7 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Index(GetUserByMailAndPasswordQuery query)
         {

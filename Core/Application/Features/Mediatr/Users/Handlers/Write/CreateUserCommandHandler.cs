@@ -27,7 +27,7 @@ namespace Application.Features.Mediatr.Users.Handlers.Write
             string photoPath = null;
             if (request.UserImageUrl != null && request.UserImageUrl.Length > 0)
             {
-                var uploadsFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "users");
+                var uploadsFolderPath = Path.Combine("C:\\csharpprojeler\\YemekUygulaması\\Frontend\\YemekWebUI", "wwwroot", "users");
                 if (!Directory.Exists(uploadsFolderPath))
                 {
                     Directory.CreateDirectory(uploadsFolderPath);
@@ -44,10 +44,11 @@ namespace Application.Features.Mediatr.Users.Handlers.Write
 
                 photoPath = $"/users/{uniqueFileName}";
 
-                User user = _mapper.Map<User>(request);
-                user.UserImageUrl= photoPath;
-                await _repository.CreateAsync(user);
+                
             }
+            User user = _mapper.Map<User>(request);
+            user.UserImageUrl = photoPath;
+            await _repository.CreateAsync(user);
         }
     }
 }
