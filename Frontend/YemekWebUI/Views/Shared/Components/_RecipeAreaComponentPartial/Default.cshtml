@@ -21,7 +21,7 @@
                                 : item.Description
                                 )
                         </p>
-                        <a href="#" class="line_btn">Tarifin tam halini gör</a>
+                        <a href=@Url.Action("Index", "RecipeDetail", new { recipeId= @item.RecipeId}) class="line_btn">Tarifin tam halini gör</a>
                     </div>
                 </div>
             }

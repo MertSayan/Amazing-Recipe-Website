@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+@await Component.InvokeAsync("_RecipeDetailBannerComponentPartial");
+@await Component.InvokeAsync("_RecipeDetailComponentPartial", new { id = ViewBag.recipeId });
+
+

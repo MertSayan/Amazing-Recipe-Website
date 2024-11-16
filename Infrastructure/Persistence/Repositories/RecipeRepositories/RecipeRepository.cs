@@ -49,7 +49,7 @@ namespace Persistence.Repositories.RecipeRepositories
             
             .Take(topCount) // İlk n tarif seçme
             
-            .Join(_context.Recipes, // Recipe tablosu ile birleştirme
+            .Join(_context.Recipes.Where(x=>x.DeletedDate==null), // Recipe tablosu ile birleştirme
                   r => r.RecipeId,
                   recipe => recipe.RecipeID,
                   (r, recipe) => new GetTopRatedRecipeQueryResult   
@@ -59,6 +59,7 @@ namespace Persistence.Repositories.RecipeRepositories
                       Description = recipe.Description,
                       RecipeImageUrl=recipe.RecipeImageUrl
                   })
+            
             .ToListAsync();
 
             return topRecipes;
