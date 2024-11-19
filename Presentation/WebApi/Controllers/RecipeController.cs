@@ -46,7 +46,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRecipe(CreateRecipeCommand command)
+        public async Task<IActionResult> CreateRecipe([FromForm]CreateRecipeCommand command)
         {
             await _mediator.Send(command);
             return Ok(Messages<Recipe>.EntityAdded);

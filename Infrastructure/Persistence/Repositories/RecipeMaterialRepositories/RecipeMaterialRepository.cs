@@ -51,7 +51,7 @@ namespace Persistence.Repositories.RecipeMaterialRepositories
 
                 var result = new GetRecipeQueryResult
                 {
-                    Id = recipe.RecipeID,
+                    RecipeId = recipe.RecipeID,
                     Title = recipe.Title,
                     Description = recipe.Description,
                     CategoryName = recipe.Category?.Name,

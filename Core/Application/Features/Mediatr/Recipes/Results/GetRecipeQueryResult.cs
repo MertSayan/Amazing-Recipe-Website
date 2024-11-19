@@ -8,7 +8,7 @@ namespace Application.Features.Mediatr.Recipes.Results
 {
     public class GetRecipeQueryResult
     {
-        public int Id { get; set; }
+        public int RecipeId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string CategoryName { get; set; }

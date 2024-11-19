@@ -1,44 +1,48 @@
 ﻿@model CreateRecipeDto
-<div class="col-lg-8 col-md-8">
-	<h3 class="mb-30">Form Element</h3>
-	<form method="post" asp-action="AddRecipe">
+<form asp-action="AddRecipe" method="post" enctype="multipart/form-data">
+    <div>
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" required />
+    </div>
 
-		<div class="mt-10">
-			<input type="text" asp-for="Title" name="Title" placeholder="Yemek Adı"
-				   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Yemek Adı'" required
-				   class="single-input">
-		</div>
+    <div>
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control" required></textarea>
+    </div>
 
-		<div class="mt-10">
-		@Html.TextBoxFor(r=>r.Title,htmlAttributes:new{@class="form-control",
-		@placeholder="Tarifin Başlığını Giriniz"})
-		</div>
+   @*  <div>
+        <label asp-for="CategoryId"></label>
+        <input asp-for="CategoryId" class="form-control" required />
+    </div> *@
 
-		<div class="mt-10">
-			@Html.TextBoxFor(r => r.Description, htmlAttributes: new
-				{
-					@class = "form-control",
-					@placeholder = "Tarifin Yapılışını Giriniz"
-				})
-		</div>
+   
+        <input type="hidden" asp-for="UserId" class="form-control" value="@ViewBag.userId"/>
 
 
-		<!-- burası düzeltilecek böyle olmaz-->
-		<div class="mt-10">
-			@Html.TextBoxFor(r => r.RecipeImageUrl, htmlAttributes: new
-				{
-					@class = "form-control",
-					@placeholder = "Tarifin Fotoğrafını Yükleyin"
-				})
-		</div>
+    <div>
+        <label asp-for="RecipeImageUrl"></label>
+        <input asp-for="RecipeImageUrl" type="file" class="form-control" accept="image/*" />
+    </div>
 
-		<div class="mt-10">
-			<textarea class="single-textarea" placeholder="Message" onfocus="this.placeholder = ''"
-					  onblur="this.placeholder = 'Message'" required></textarea>
-		</div>
 
-		@await Component.InvokeAsync("_AddRecipeGetCategoryComponentPartial");
-		@await Component.InvokeAsync("_AddRecipeGetMaterialComponentPartial");
+    @await Component.InvokeAsync("_AddRecipeGetCategoryComponentPartial");
+    @await Component.InvokeAsync("_AddRecipeGetMaterialComponentPartial");
 
-	</form>
+   @*  <div>
+        <label>Materials</label>
+        <div id="material-list">
+            @for (int i = 0; i < Model.MaterialId.Count; i++)
+            {
+                <input type="number" name="MaterialId" value="@Model.MaterialId[i]" class="form-control" />
+            }
+            <button type="button" onclick="addMaterial()">Add Material</button>
+        </div>
+    </div> *@
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+		
+
 </div>

@@ -11,6 +11,7 @@
                             <img src="@item.RecipeImageUrl" alt="">
                         </div>
                         <h3>@item.Title</h3>
+                        <h3>@item.RecipeId</h3>
                         <p>
                             @(
                                 item.Description.Length > 50
@@ -19,7 +20,7 @@
                                 )
                         </p>
                         <p>@item.Username</p>
-                        <a href="#" class="line_btn">Tarifin Tamamını Gör</a>
+                        <a href=@Url.Action("Index", "RecipeDetail", new { recipeId= @item.RecipeId}) class="line_btn">Tarifin Tamamını Gör</a>
                     </div>
                 </div>
             }
