@@ -49,6 +49,17 @@ namespace YemekWebUI
                 name: "default",
                 pattern: "{controller=Login}/{action=Index}/{id?}");
 
+
+            //area kullanýmý için
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapDefaultControllerRoute();
+            });
+
+
             app.Run();
         }
     }
