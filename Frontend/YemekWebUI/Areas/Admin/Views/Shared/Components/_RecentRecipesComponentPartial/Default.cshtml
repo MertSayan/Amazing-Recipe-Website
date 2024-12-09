@@ -1,0 +1,31 @@
+﻿@model List<ResultRecentRecipesDto>
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-head-row card-tools-still-right">
+                <div class="card-title">Son Eklenen Tarifler</div>
+                <div class="card-tools">
+                    <div class="dropdown">
+                        <button class="btn btn-icon btn-clean" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <ol class="activity-feed">
+                @foreach (var item in Model)
+                {
+                    <li class="feed-item feed-item-secondary">
+                        <time class="date" datetime="9-2">@item.CreatedDate</time>
+                        <span class="text">
+                            @item.Title, @item.CategoryName, @item.UserName
+                        </span>
+                    </li>
+                }
+
+            </ol>
+        </div>
+    </div>
+</div>

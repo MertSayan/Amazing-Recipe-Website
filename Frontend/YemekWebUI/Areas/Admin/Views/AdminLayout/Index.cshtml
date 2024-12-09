@@ -8,13 +8,25 @@
 
 <body>
 
-    @await Component.InvokeAsync("_AdminSideBarComponentPartial")
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Side Bar -->
+            <div class="col-md-2 ">
+                @await Component.InvokeAsync("_AdminSideBarComponentPartial")
+            </div>
 
+            <!-- Main Content -->
+            <div class="col-md-10">
+                @RenderBody()
+            </div>
+        </div>
+        <div class="row">
+            @await Component.InvokeAsync("_AdminFooterLayoutComponentPartial")
+            @await Component.InvokeAsync("_AdminLayoutScriptsComponentPartial")
+        </div>
+    </div>
 
-
-    @RenderBody()
-    @await Component.InvokeAsync("_AdminFooterLayoutComponentPartial")
-    @await Component.InvokeAsync("_AdminLayoutScriptsComponentPartial")
+ 
 
 </body>
 </html>

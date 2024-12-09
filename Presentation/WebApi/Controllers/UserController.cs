@@ -31,6 +31,19 @@ namespace WebApi.Controllers
             return Ok(values);
         }
 
+        [HttpGet("RecentRegisters")]
+        public async Task<IActionResult> RecentRegisters()
+        {
+            var values = await _mediator.Send(new GetRecentRegistersQuery());
+            return Ok(values);
+        }
+        [HttpGet("GetUserByIdWithOutPassword{id}")]
+        public async Task<IActionResult> GetUserByIdWithOutPassword(int id)
+        {
+            var values = await _mediator.Send(new GetUserByIdForAdminPageQuery(id));
+            return Ok(values);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromForm]CreateUserCommand command)
         {
@@ -38,7 +51,7 @@ namespace WebApi.Controllers
             return Ok(Messages<User>.EntityAdded);
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateUser(UpdateUserCommand command)
+        public async Task<IActionResult> UpdateUser([FromForm] UpdateUserCommand command)
         {
             await _mediator.Send(command);
             return Ok(Messages<User>.EntityUpdated);

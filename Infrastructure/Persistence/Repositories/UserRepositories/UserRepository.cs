@@ -2,13 +2,7 @@
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Repositories.UserRepositories
 {
@@ -27,6 +21,28 @@ namespace Persistence.Repositories.UserRepositories
                 .Include(x=>x.Role)
                 .FirstOrDefaultAsync();
             return value;
+        }
+
+        public async Task<User> GetByUserWithOutPassword(int id)
+        {
+
+            var value = await _context.Users
+                .Where(x => x.DeletedDate == null)
+                .Include(x => x.Role)
+                .FirstOrDefaultAsync(x => x.UserId == id);
+
+            return value;
+        }
+
+        public async Task<List<User>> GetRecentRegisters()
+        {
+            var values = await _context.Users
+                .Where(x => x.DeletedDate == null)
+                .Include(x=>x.Role)
+                .OrderByDescending(x => x.CreatedDate)
+                .Take(5)
+                .ToListAsync();
+            return values;
         }
     }
 }

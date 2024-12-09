@@ -1,8 +1,12 @@
-﻿using Domain;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.Features.Mediatr.Users.Results
 {
-    public class GetUserQueryResult
+    public class GetUserByIdForAdminPageQueryResult
     {
         public int UserId { get; set; }
         public string Name { get; set; }
@@ -10,6 +14,5 @@ namespace Application.Features.Mediatr.Users.Results
         public string Email { get; set; }
         public string Phone { get; set; }
         public DateTime BirthDate { get; set; }
-        public string? UserImageUrl { get; set; }
     }
 }

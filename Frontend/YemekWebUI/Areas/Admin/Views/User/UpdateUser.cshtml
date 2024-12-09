@@ -1,0 +1,48 @@
+﻿@model UpdateUserForAdminDto
+@{
+    ViewData["Title"] = "UpdateUser";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+
+<div class="container mt-5">
+    <h2 class="text-center">Kayıt Ol</h2>
+    <form class="Index" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="UserId" />
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" placeholder="Adınızı giriniz" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Surname" class="form-label"></label>
+            <input asp-for="Surname" class="form-control" placeholder="Soyadınızı giriniz" />
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" placeholder="Email adresinizi giriniz" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Phone" class="form-label"></label>
+            <input asp-for="Phone" class="form-control" placeholder="Telefon numaranızı giriniz" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="BirthDate" class="form-label"></label>
+            <input asp-for="BirthDate" class="form-control" type="date" />
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <input asp-for="UserImageUrl" class="form-control" type="file" />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Kayıt Ol</button>
+    </form>
+</div>

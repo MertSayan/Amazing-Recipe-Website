@@ -25,6 +25,12 @@ namespace WebApi.Controllers
             var values=await _mediator.Send(new GetCategoryQuery());
             return Ok(values);
         }
+        [HttpGet("CategoryRecipeCount")]
+        public async Task<IActionResult> CategoryRecipeCount()
+        {
+            var values = await _mediator.Send(new GetCategoryRecipeCountQuery());
+            return Ok(values);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryCommand command)

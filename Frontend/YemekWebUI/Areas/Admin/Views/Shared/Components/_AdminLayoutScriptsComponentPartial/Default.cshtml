@@ -31,3 +31,66 @@
 <!-- Kaiadmin JS -->
 <script src="~/kaiadmin-lite-1.2.0/kaiadmin-lite-1.2.0/assets/js/kaiadmin.min.js"></script>
 
+<script>
+    // SweetAlert ile Silme İşlemi ve Yönlendirme
+    $(document).on('click', '.delete-button', function (e) {
+        e.preventDefault(); // Varsayılan tıklama davranışını engelle
+
+        var url = $(this).data('url'); // Butondaki hedef URL'yi al
+
+        swal({
+            title: "Emin Misin?",
+            text: "Bunu Geri Alamazsın!",
+            type: "Uyarı",
+            buttons: {
+                confirm: {
+                    text: "Evet, sil gitsin!",
+                    className: "btn btn-success",
+                },
+                cancel: {
+                    text: "Hayır, iptal et!",
+                    visible: true,
+                    className: "btn btn-danger",
+                },
+            },
+        }).then((willDelete) => {
+            if (willDelete) {
+                // Kullanıcı onay verdi, yönlendirme yap
+                window.location.href = url;
+            } else {
+                swal.close(); // SweetAlert'i kapat
+            }
+        });
+    });
+
+    $(document).on('click', '.update-button', function (e) {
+        e.preventDefault(); // Varsayılan tıklama davranışını engelle
+
+        var url = $(this).data('url'); // Butondaki hedef URL'yi al
+
+        swal({
+            title: "Emin Misin?",
+            text: "Güncelleme Yapılacak",
+            type: "Güncelleme İsteği",
+            buttons: {
+                confirm: {
+                    text: "Evet, güncelleme sayfasına git!",
+                    className: "btn btn-success",
+                },
+                cancel: {
+                    text: "Hayır, iptal et!",
+                    visible: true,
+                    className: "btn btn-danger",
+                },
+            },
+        }).then((willDelete) => {
+            if (willDelete) {
+                // Kullanıcı onay verdi, yönlendirme yap
+                window.location.href = url;
+            } else {
+                swal.close(); // SweetAlert'i kapat
+            }
+        });
+    });
+</script>
+

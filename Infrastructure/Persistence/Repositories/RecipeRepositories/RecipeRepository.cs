@@ -1,4 +1,5 @@
-﻿using Application.Features.Mediatr.Recipes.Results;
+﻿using Application.Features.Mediatr.Categorys.Results;
+using Application.Features.Mediatr.Recipes.Results;
 using Application.Interfaces.RecipeInterface;
 using Domain;
 using Microsoft.EntityFrameworkCore;
@@ -20,11 +21,26 @@ namespace Persistence.Repositories.RecipeRepositories
             _context = context;
         }
 
-        public async Task<List<GetRecipeQueryResult>> GetAllRecipe()
+        public async Task<List<Recipe>> GetAllRecipe()
         {
-            //var values = await _context.Recipes
-            //    .Include(x => x.)
-            return null;
+            var recipes=await _context.Recipes
+                .Where(x=>x.DeletedDate==null)
+                .Include(x=>x.Category)
+                .Include(x=>x.User)
+                .ToListAsync();
+            return recipes;
+        }
+
+        public async Task<List<Recipe>> GetRecentRecipe()
+        {
+            var values=await _context.Recipes
+                .Where(x=>x.DeletedDate==null)
+                .Include(x=>x.User)
+                .Include(x=>x.Category)
+                .OrderByDescending(x=>x.CreatedDate)
+                .Take(5)
+                .ToListAsync();
+            return values;
         }
 
         public async Task<List<Recipe>> GetRecipeByUserId(int userId)
@@ -33,6 +49,20 @@ namespace Persistence.Repositories.RecipeRepositories
                 .Where(x=>x.UserId == userId && x.DeletedDate==null)
                 .ToListAsync();
             return recipes;
+        }
+
+        public async Task<List<GetCategoryRecipeCountQueryResult>> GetRecipeCategoryOrderBy()
+        {
+            var result = await _context.Recipes
+                .Where(x=>x.DeletedDate==null)
+                .GroupBy(x => x.CategoryId) //categoryId ye göre grupladık
+                .Select(x => new GetCategoryRecipeCountQueryResult
+                {
+                    CategoryId=x.Key,
+                    CategoryName=x.FirstOrDefault().Category.Name,
+                    RecipeCount=x.Count()
+                }).ToListAsync();
+            return result;
         }
 
         public async Task<List<GetTopRatedRecipeQueryResult>> GetTopRatedRecipes(int topCount)

@@ -45,6 +45,20 @@ namespace WebApi.Controllers
             return Ok(values);
         }
 
+        [HttpGet("GetAllRecipesForAdmin")]
+        public async Task<IActionResult> GetAllRecipesForAdmin()
+        {
+            var values=await _mediator.Send(new GetRecipeForAdminQuery());
+            return Ok(values);
+        }
+
+        [HttpGet("GetRecentRecipes")]
+        public async Task<IActionResult> GetRecentRecipes()
+        {
+            var values = await _mediator.Send(new GetRecentRecipeQuery());
+            return Ok(values);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateRecipe([FromForm]CreateRecipeCommand command)
         {
