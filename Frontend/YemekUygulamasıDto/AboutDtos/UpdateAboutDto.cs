@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace YemekUygulamasıDto.AboutDtos
+{
+    public class UpdateAboutDto
+    {
+        public int AboutId { get; set; }
+        public string Description { get; set; }
+    }
+}

@@ -54,7 +54,7 @@ namespace YemekWebUI.Controllers
 
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index", "Home");
+                return Redirect("~/");
             }
 
             return View();

@@ -1,14 +1,12 @@
-﻿@model UpdateUserForAdminDto
+﻿@model CreateUserForAdminDto
 @{
-    ViewData["Title"] = "UpdateUser";
+    ViewData["Title"] = "CreateUser";
     Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
 }
 
-
 <div class="container mt-5">
-    <h2 class="text-center">User Güncelleme Sayfası</h2>
+    <h2 class="text-center">Kullanıcı Kayıt Sayfası</h2>
     <form class="Index" method="post" enctype="multipart/form-data">
-        <input type="hidden" asp-for="UserId" />
         <div class="mb-3">
             <label asp-for="Name" class="form-label"></label>
             <input asp-for="Name" class="form-control" placeholder="Adınızı giriniz" />
@@ -28,6 +26,12 @@
         </div>
 
         <div class="mb-3">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" type="password" class="form-control" placeholder="Şifrenizi giriniz" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
             <label asp-for="Phone" class="form-label"></label>
             <input asp-for="Phone" class="form-control" placeholder="Telefon numaranızı giriniz" />
             <span asp-validation-for="Phone" class="text-danger"></span>
@@ -40,9 +44,11 @@
         </div>
 
         <div class="mb-3">
+            <label asp-for="UserImageUrl" class="form-label"></label>
             <input asp-for="UserImageUrl" class="form-control" type="file" />
         </div>
 
         <button type="submit" class="btn btn-primary w-100">Kayıt Ol</button>
     </form>
 </div>
+

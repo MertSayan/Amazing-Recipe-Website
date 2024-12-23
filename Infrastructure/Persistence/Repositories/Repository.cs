@@ -44,8 +44,9 @@ namespace Persistence.Repositories
 
         public async Task<T> GetByIdAsync(int id)
         {
-            var entity = await _context.Set<T>().FindAsync(id);
-            if (entity != null)
+            var entity = await _context.Set<T>()
+                .FindAsync(id);
+            if (entity != null && entity.DeletedDate==null)
             {
                 return entity;
             }

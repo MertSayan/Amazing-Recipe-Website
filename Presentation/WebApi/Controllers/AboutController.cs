@@ -25,6 +25,13 @@ namespace WebApi.Controllers
             var values = await _mediator.Send(new GetAboutQuery());
             return Ok(values);  
         }
+
+        [HttpGet("ById")]
+        public async Task<IActionResult> GetAboutById(int id)
+        {
+            var values = await _mediator.Send(new GetAboutByIdQuery(id));
+            return Ok(values);
+        }
         [HttpPost]
         public async Task<IActionResult> CreateAbout(CreateAboutCommand command)
         {

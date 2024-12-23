@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿    using Microsoft.AspNetCore.Mvc;
 
 namespace YemekWebUI.Areas.Admin.Controllers
 {
+
     [Area("Admin")]
     [Route("Admin/AdminMain")]
     public class AdminMainController : Controller

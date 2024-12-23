@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Text;
 using YemekUygulamasıDto.RegisterDtos;
 using YemekUygulamasıDto.UserDtos;
 
@@ -78,6 +79,62 @@ namespace YemekWebUI.Areas.Admin.Controllers
                 return RedirectToAction("Index", "User", new {area="Admin"});
             }
 
+            return View();
+        }
+
+        
+        [HttpGet]
+        [Route("CreateUser")]
+        public IActionResult CreateUser()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("CreateUser")]
+        public async Task<IActionResult> CreateUser(CreateUserForAdminDto dto)
+        {
+            var client = _httpClientFactory.CreateClient();
+
+            // Form-data içeriği oluştur
+            var formData = new MultipartFormDataContent();
+
+            // createRegisterDto içindeki her alanı form-data içine ekleyin
+            formData.Add(new StringContent(dto.Name), "Name");
+            formData.Add(new StringContent(dto.Surname), "Surname");
+            formData.Add(new StringContent(dto.Email), "Email");
+            formData.Add(new StringContent(dto.Password), "Password");
+            formData.Add(new StringContent(dto.Phone), "Phone");
+            formData.Add(new StringContent(dto.BirthDate.ToString("dd-MM-yyyy")), "BirthDate");
+
+            if (dto.UserImageUrl != null)
+            {
+                var fileStream = dto.UserImageUrl.OpenReadStream();
+                var fileContent = new StreamContent(fileStream);
+                fileContent.Headers.ContentType = new MediaTypeHeaderValue(dto.UserImageUrl.ContentType);
+                formData.Add(fileContent, "UserImageUrl", dto.UserImageUrl.FileName); // API'deki ile aynı ismi kullanın
+            }
+
+            var responseMessage = await client.PostAsync("https://localhost:7092/api/User", formData);
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index", "User", new {area="Admin"});
+            }
+
+            return View();
+        }
+
+
+        [Route("RemoveUser/{id}")]
+        public async Task<IActionResult> RemoveUser(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.DeleteAsync("https://localhost:7092/api/User?id="+id);
+            if(responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index", "User", new { area = "Admin" });
+            }
             return View();
         }
     }
