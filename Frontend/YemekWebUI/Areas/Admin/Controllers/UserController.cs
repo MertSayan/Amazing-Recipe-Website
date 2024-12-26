@@ -19,14 +19,16 @@ namespace YemekWebUI.Areas.Admin.Controllers
         }
 
         [Route("Index")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber=1,int pageSize=10)
         {
             var client=_httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7092/api/User");
+            var responseMessage = await client.GetAsync($"https://localhost:7092/api/User/GetPagedUser?pageNumber={pageNumber}&pageSize={pageSize}");
             if(responseMessage.IsSuccessStatusCode)
             {
                 var jsonData=await responseMessage.Content.ReadAsStringAsync();
                 var values=JsonConvert.DeserializeObject<List<ResultAllUsersForAdminPageDto>>(jsonData);
+                ViewBag.CurrentPage = pageNumber;
+                ViewBag.PageSize = pageSize;
                 return View(values);
             }
 

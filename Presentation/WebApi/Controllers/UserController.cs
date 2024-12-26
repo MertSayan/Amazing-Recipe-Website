@@ -43,7 +43,13 @@ namespace WebApi.Controllers
             var values = await _mediator.Send(new GetUserByIdForAdminPageQuery(id));
             return Ok(values);
         }
-
+        [HttpGet("GetPagedUser")]
+        public async Task<IActionResult> GetUserByIdWithOutPassword(int pageNumber=1,int pageSize=10)
+        {
+            var values = await _mediator.Send(new GetPagedUserQuery(pageNumber,pageSize));
+            return Ok(values);
+        }
+        
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromForm]CreateUserCommand command)
         {

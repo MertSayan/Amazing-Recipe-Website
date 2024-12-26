@@ -34,6 +34,16 @@ namespace Persistence.Repositories.UserRepositories
             return value;
         }
 
+        public async Task<List<User>> GetPagedUserAsync(int pageNumber, int pageSize)
+        {
+            return await _context.Users
+                .Where(x => x.DeletedDate == null)
+                .OrderBy(x => x.Name)
+                .Skip((pageNumber - 1) * pageSize)// İlgili sayfa için kayıtları atla
+                .Take(pageSize)// Sayfa başına veriyi al
+                .ToListAsync();
+        }
+
         public async Task<List<User>> GetRecentRegisters()
         {
             var values = await _context.Users

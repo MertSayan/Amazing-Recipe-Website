@@ -22,7 +22,7 @@
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>CategoryName</th>
-                                <th>UserName</th>
+                                <th>Yazar</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -32,7 +32,7 @@
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>CategoryName</th>
-                                <th>UserName</th>
+                                <th>Yazar</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -63,5 +63,18 @@
                 </div>
             </div>
         </div>
+        <nav>
+            <ul class="pagination">
+                <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="?pageNumber=@(ViewBag.CurrentPage - 1)&pageSize=@ViewBag.PageSize">Önceki</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?pageNumber=@ViewBag.CurrentPage&pageSize=@ViewBag.PageSize">@ViewBag.CurrentPage</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?pageNumber=@(ViewBag.CurrentPage + 1)&pageSize=@ViewBag.PageSize">Sonraki</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>

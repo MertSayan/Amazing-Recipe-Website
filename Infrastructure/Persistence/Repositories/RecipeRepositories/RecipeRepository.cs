@@ -31,6 +31,18 @@ namespace Persistence.Repositories.RecipeRepositories
             return recipes;
         }
 
+        public async Task<List<Recipe>> GetPagedRecipeAsync(int pageNumber, int pageSize)
+        {
+            return await _context.Recipes
+                .Where(x=>x.DeletedDate==null)
+                .Include(x=>x.User)
+                .Include(x=>x.Category)
+                .OrderBy(x=>x.Category.Name)
+                .Skip((pageNumber - 1) * pageSize) 
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
         public async Task<List<Recipe>> GetRecentRecipe()
         {
             var values=await _context.Recipes

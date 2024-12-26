@@ -9,5 +9,8 @@ namespace Application.Interfaces.UserInterface
         Task<List<User>> GetRecentRegisters();
 
         Task<User> GetByUserWithOutPassword(int id);
+
+        Task<List<User>> GetPagedUserAsync(int pageNumber, int pageSize);
+
     }
 }

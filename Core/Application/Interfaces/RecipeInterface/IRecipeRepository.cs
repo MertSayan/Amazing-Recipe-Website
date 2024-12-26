@@ -18,5 +18,8 @@ namespace Application.Interfaces.RecipeInterface
         Task<List<Recipe>> GetRecentRecipe();
 
         Task<List<GetCategoryRecipeCountQueryResult>> GetRecipeCategoryOrderBy();
+
+        Task<List<Recipe>> GetPagedRecipeAsync(int pageNumber, int pageSize);
+
     }
 }

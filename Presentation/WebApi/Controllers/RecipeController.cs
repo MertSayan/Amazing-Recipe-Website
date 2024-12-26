@@ -58,7 +58,13 @@ namespace WebApi.Controllers
             var values = await _mediator.Send(new GetRecentRecipeQuery());
             return Ok(values);
         }
-
+        [HttpGet("GetPagedRecipe")]
+        public async Task<IActionResult> GetPagedRecipe(int pageNumber=1,int pageSize=3)
+        {
+            var values = await _mediator.Send(new GetPagedRecipeQuery(pageNumber,pageSize));
+            return Ok(values);
+        }
+        
         [HttpPost]
         public async Task<IActionResult> CreateRecipe([FromForm]CreateRecipeCommand command)
         {
