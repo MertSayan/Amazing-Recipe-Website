@@ -6,7 +6,9 @@ using Application.Interfaces.RecipeMaterialInterface;
 using Application.Interfaces.UserInterface;
 using Application.Servicess;
 using Application.Tools;
+using Application.Validators.UserValidator;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Persistence.Context;
@@ -49,6 +51,9 @@ namespace WebApi
             builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 
             builder.Services.AddSaveApplicationService();
+
+            builder.Services.AddControllers().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<CreateUserValidator>
+           ()); //buraya CreateUserValidator yazmam o projedeki tüm diðer validatorlarý da kapsýyor.
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
