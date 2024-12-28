@@ -6,15 +6,39 @@
 
 <div class="container mt-5">
     <h2 class="text-center">Hakkımızda Güncelleme Sayfası</h2>
-    <form class="Index" method="post" enctype="multipart/form-data">
+    <form id="updateAboutForm" class="Index" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="AboutId" />
         <div class="mb-3">
-            <label asp-for="Description" class="form-label"></label>
-            <input asp-for="Description" class="form-control" placeholder="Hakkımızda metnini giriniz" />
-            <span asp-validation-for="Description" class="text-danger"></span>
+            <label asp-for="Description" class="form-label">Hakkımızda Metni</label>
+            <input id="Description" asp-for="Description" class="form-control" placeholder="Hakkımızda metnini giriniz" />
+            <span id="DescriptionError" class="text-danger"></span>
         </div>
 
         <button type="submit" class="btn btn-primary w-100">Güncelle</button>
     </form>
 </div>
 
+<script>
+    document.getElementById('updateAboutForm').addEventListener('submit', function (event) {
+        let isValid = true;
+        const description = document.getElementById('Description');
+        const descriptionError = document.getElementById('DescriptionError');
+
+        // Hata mesajını temizle
+        descriptionError.textContent = '';
+
+        // Doğrulama: Boş bırakılmamalı ve minimum 50 karakter
+        if (!description.value.trim()) {
+            descriptionError.textContent = 'Hakkımızda metni boş bırakılamaz.';
+            isValid = false;
+        } else if (description.value.length < 50) {
+            descriptionError.textContent = 'Hakkımızda metni en az 50 karakter olmalıdır.';
+            isValid = false;
+        }
+
+        // Form gönderimini engelle
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+</script>

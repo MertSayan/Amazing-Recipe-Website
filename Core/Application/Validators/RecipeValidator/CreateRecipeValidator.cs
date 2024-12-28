@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Validators.RecipeValidator
 {
-    public class CreateRecipeValidator:AbstractValidator<CreateRecipeCommand>
+    public class CreateRecipeValidator : AbstractValidator<CreateRecipeCommand>
     {
         public CreateRecipeValidator()
         {
@@ -21,9 +21,9 @@ namespace Application.Validators.RecipeValidator
             RuleFor(x => x.Description)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Açıklama değeri boş bırakılamaz")
-                .MinimumLength(50).WithMessage("Açıklama değeri minimum 5 harfli olmalıdır");
+                .MinimumLength(50).WithMessage("Açıklama değeri minimum 50 harfli olmalıdır");
 
-                
+
         }
     }
 }

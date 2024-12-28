@@ -1,5 +1,4 @@
-﻿
- @model CreateRegisterDto
+﻿ @model CreateRegisterDto
 @{
     Layout = null;
 }
@@ -50,6 +49,10 @@
             color: #6c757d;
             font-size: 14px;
         }
+
+        .text-danger {
+            font-size: 0.85rem;
+        }
     </style>
 </head>
 <body>
@@ -60,45 +63,42 @@
                     <h2 class="fw-bold text-primary">Kayıt Ol</h2>
                     <p class="text-muted">Hesap oluşturmak için bilgilerinizi girin</p>
                 </div>
-                <form class="Index" method="post" enctype="multipart/form-data">
+                <form id="registerForm" class="Index" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
-                        <label asp-for="Name" class="form-label"></label>
-                        <input asp-for="Name" class="form-control" placeholder="Adınızı giriniz" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <label asp-for="Name" class="form-label">Ad</label>
+                        <input id="Name" asp-for="Name" class="form-control" placeholder="Adınızı giriniz" />
+                        <span id="NameError" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Surname" class="form-label"></label>
-                        <input asp-for="Surname" class="form-control" placeholder="Soyadınızı giriniz" />
-                        <span asp-validation-for="Surname" class="text-danger"></span>
+                        <label asp-for="Surname" class="form-label">Soyad</label>
+                        <input id="Surname" asp-for="Surname" class="form-control" placeholder="Soyadınızı giriniz" />
+                        <span id="SurnameError" class="text-danger"></span>
                     </div>
-
                     <div class="mb-3">
                         <label asp-for="Email" class="form-label"></label>
-                        <input asp-for="Email" class="form-control" placeholder="Email adresinizi giriniz" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <input asp-for="Email" class="form-control" placeholder="Email adresinizi giriniz" required />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label">Şifre</label>
+                        <input id="Password" asp-for="Password" type="password" class="form-control" placeholder="Şifrenizi giriniz" />
+                        <span id="PasswordError" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Password" class="form-label"></label>
-                        <input asp-for="Password" type="password" class="form-control" placeholder="Şifrenizi giriniz" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <label asp-for="Phone" class="form-label">Telefon</label>
+                        <input id="Phone" asp-for="Phone" class="form-control" placeholder="Telefon numaranızı giriniz" />
+                        <span id="PhoneError" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Phone" class="form-label"></label>
-                        <input asp-for="Phone" class="form-control" placeholder="Telefon numaranızı giriniz" />
-                        <span asp-validation-for="Phone" class="text-danger"></span>
+                        <label asp-for="BirthDate" class="form-label">Doğum Tarihi</label>
+                        <input id="BirthDate" asp-for="BirthDate" class="form-control" type="date" />
+                        <span id="BirthDateError" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="BirthDate" class="form-label"></label>
-                        <input asp-for="BirthDate" class="form-control" type="date" />
-                        <span asp-validation-for="BirthDate" class="text-danger"></span>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="UserImageUrl" class="form-label"></label>
+                        <label asp-for="UserImageUrl" class="form-label">Profil Resmi</label>
                         <input asp-for="UserImageUrl" class="form-control" type="file" />
                     </div>
 
@@ -111,7 +111,68 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS (Optional) -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function (event) {
+            let isValid = true;
+
+            // Ad Doğrulama
+            const name = document.getElementById('Name');
+            const nameError = document.getElementById('NameError');
+            nameError.textContent = '';
+            if (!name.value.trim() || name.value.length < 3 || name.value.length > 20) {
+                nameError.textContent = 'Ad 3-20 karakter uzunluğunda olmalıdır.';
+                isValid = false;
+            }
+
+            // Soyad Doğrulama
+            const surname = document.getElementById('Surname');
+            const surnameError = document.getElementById('SurnameError');
+            surnameError.textContent = '';
+            if (!surname.value.trim() || surname.value.length < 3 || surname.value.length > 20) {
+                surnameError.textContent = 'Soyad 3-20 karakter uzunluğunda olmalıdır.';
+                isValid = false;
+            }
+
+            // Şifre Doğrulama
+            const password = document.getElementById('Password');
+            const passwordError = document.getElementById('PasswordError');
+            passwordError.textContent = '';
+            if (!password.value.trim() || password.value.length < 6) {
+                passwordError.textContent = 'Şifre en az 6 karakter uzunluğunda olmalıdır.';
+                isValid = false;
+            }
+
+            // Telefon Doğrulama
+            const phone = document.getElementById('Phone');
+            const phoneError = document.getElementById('PhoneError');
+            phoneError.textContent = '';
+            const phonePattern = /^[0-9]{11}$/;
+            if (!phone.value.trim() || !phonePattern.test(phone.value)) {
+                phoneError.textContent = 'Telefon numarası 11 haneli ve sadece rakamlardan oluşmalıdır.';
+                isValid = false;
+            }
+
+            // Doğum Tarihi Doğrulama
+            const birthDate = document.getElementById('BirthDate');
+            const birthDateError = document.getElementById('BirthDateError');
+            birthDateError.textContent = '';
+            if (!birthDate.value.trim() || !isAtLeast18YearsOld(new Date(birthDate.value))) {
+                birthDateError.textContent = '18 yaşından büyük olmalısınız.';
+                isValid = false;
+            }
+
+            if (!isValid) {
+                event.preventDefault(); // Form gönderimini engelle
+            }
+        });
+
+        function isAtLeast18YearsOld(birthdate) {
+            const today = new Date();
+            const age18Date = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+            return birthdate <= age18Date;
+        }
+    </script>
 </body>
 </html>

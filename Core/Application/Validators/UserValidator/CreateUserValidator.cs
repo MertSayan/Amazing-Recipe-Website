@@ -27,9 +27,7 @@ namespace Application.Validators.UserValidator
             RuleFor(x => x.Email)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Mail değeri boş bırakılamaz")
-                .EmailAddress().WithMessage("Girilen değer mail formatında olmalıdır")
-                .MinimumLength(5).WithMessage("Mail, minimum 5 haneli olmalıdır")
-                .MaximumLength(50).WithMessage("Mail, maksimum 50 haneli olmalıdır");
+                .EmailAddress().WithMessage("Girilen değer mail formatında olmalıdır");
 
             RuleFor(x => x.Password)
                 .Cascade(CascadeMode.Stop)

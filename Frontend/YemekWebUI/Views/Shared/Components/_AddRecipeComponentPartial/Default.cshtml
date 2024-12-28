@@ -1,48 +1,61 @@
 ﻿@model CreateRecipeDto
-<form asp-action="AddRecipe" method="post" enctype="multipart/form-data">
+<form id="createRecipeForm" asp-action="AddRecipe" method="post" enctype="multipart/form-data">
     <div>
         <label asp-for="Title"></label>
-        <input asp-for="Title" class="form-control" required />
+        <input id="Title" asp-for="Title" class="form-control" required />
+        <span id="TitleError" class="text-danger"></span>
     </div>
 
     <div>
         <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control" required></textarea>
+        <textarea id="Description" asp-for="Description" class="form-control" required></textarea>
+        <span id="DescriptionError" class="text-danger"></span>
     </div>
 
-   @*  <div>
-        <label asp-for="CategoryId"></label>
-        <input asp-for="CategoryId" class="form-control" required />
-    </div> *@
-
-   
-        <input type="hidden" asp-for="UserId" class="form-control" value="@ViewBag.userId"/>
-
+    <input type="hidden" asp-for="UserId" class="form-control" value="@ViewBag.userId" />
 
     <div>
         <label asp-for="RecipeImageUrl"></label>
         <input asp-for="RecipeImageUrl" type="file" class="form-control" accept="image/*" />
     </div>
 
-
     @await Component.InvokeAsync("_AddRecipeGetCategoryComponentPartial");
     @await Component.InvokeAsync("_AddRecipeGetMaterialComponentPartial");
-
-   @*  <div>
-        <label>Materials</label>
-        <div id="material-list">
-            @for (int i = 0; i < Model.MaterialId.Count; i++)
-            {
-                <input type="number" name="MaterialId" value="@Model.MaterialId[i]" class="form-control" />
-            }
-            <button type="button" onclick="addMaterial()">Add Material</button>
-        </div>
-    </div> *@
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+<script>
+    document.getElementById('createRecipeForm').addEventListener('submit', function (event) {
+        let isValid = true;
 
-		
+        // Title Validation
+        const title = document.getElementById('Title');
+        const titleError = document.getElementById('TitleError');
+        titleError.textContent = '';
+        if (!title.value.trim()) {
+            titleError.textContent = 'Başlık boş bırakılamaz.';
+            isValid = false;
+        } else if (title.value.length < 5 || title.value.length > 100) {
+            titleError.textContent = 'Başlık en az 5, en fazla 100 karakter olmalıdır.';
+            isValid = false;
+        }
 
-</div>
+        // Description Validation
+        const description = document.getElementById('Description');
+        const descriptionError = document.getElementById('DescriptionError');
+        descriptionError.textContent = '';
+        if (!description.value.trim()) {
+            descriptionError.textContent = 'Açıklama boş bırakılamaz.';
+            isValid = false;
+        } else if (description.value.length < 50) {
+            descriptionError.textContent = 'Açıklama en az 50 karakter olmalıdır.';
+            isValid = false;
+        }
+
+        // Prevent form submission if validation fails
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+</script>
