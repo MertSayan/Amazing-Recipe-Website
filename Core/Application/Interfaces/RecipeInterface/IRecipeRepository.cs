@@ -21,5 +21,8 @@ namespace Application.Interfaces.RecipeInterface
 
         Task<List<Recipe>> GetPagedRecipeAsync(int pageNumber, int pageSize);
 
+        Task<List<Recipe>> GetPagedRecipeByCategoryAsync(int pageNumber, int pageSize,string categoryName);
+        Task<List<Recipe>> GetPagedRecipeByAuthorAsync(int pageNumber, int pageSize,string authorName);
+
     }
 }

@@ -4,11 +4,6 @@ using Application.Interfaces.RecipeInterface;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Repositories.RecipeRepositories
 {
@@ -39,6 +34,32 @@ namespace Persistence.Repositories.RecipeRepositories
                 .Include(x=>x.Category)
                 .OrderBy(x=>x.Category.Name)
                 .Skip((pageNumber - 1) * pageSize) 
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        public async Task<List<Recipe>> GetPagedRecipeByAuthorAsync(int pageNumber, int pageSize, string authorName)
+        {
+            return await _context.Recipes
+               .Where(x => x.DeletedDate == null)
+               .Include(x => x.User)
+               .Include(x => x.Category)
+               .Where(x => x.User.Name == authorName)
+               .OrderBy(x => x.CreatedDate)
+               .Skip((pageNumber - 1) * pageSize)
+               .Take(pageSize)
+               .ToListAsync();
+        }
+
+        public async Task<List<Recipe>> GetPagedRecipeByCategoryAsync(int pageNumber, int pageSize, string categoryName)
+        {
+            return await _context.Recipes
+                .Where(x => x.DeletedDate == null)
+                .Include(x => x.User)
+                .Include(x => x.Category)
+                .Where(x => x.Category.Name == categoryName)
+                .OrderBy(x => x.CreatedDate)
+                .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
         }

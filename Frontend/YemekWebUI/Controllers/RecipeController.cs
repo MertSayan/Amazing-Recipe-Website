@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using YemekUygulamasıDto.RecipeDtos;
@@ -22,6 +23,49 @@ namespace YemekWebUI.Controllers
             ViewBag.CurrentPage = pageNumber;
             ViewBag.PageSize = pageSize;
             ViewBag.Baslik = "Tarifler";
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RecipeFilterByCategory(string categoryName,int pageNumber = 1, int pageSize = 6)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync($"https://localhost:7092/api/Recipe/GetPagedRecipeByCategory?categoryName={categoryName}&pageNumber={pageNumber}&pageSize={pageSize}");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData=await responseMessage.Content.ReadAsStringAsync();
+                var recipes=JsonConvert.DeserializeObject<List<ResultAllRecipeDto>>(jsonData);
+
+                ViewBag.CurrentPage = pageNumber;
+                ViewBag.PageSize = pageSize;
+                ViewBag.Category=categoryName;
+                ViewBag.Baslik = "Category'e göre listelenmiş tarifler";
+
+                return View(recipes);
+
+            }
+
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> RecipeFilterByAuthor(string authorName, int pageNumber = 1, int pageSize = 6)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync($"https://localhost:7092/api/Recipe/GetPagedRecipeByAuthor?authorName={authorName}&pageNumber={pageNumber}&pageSize={pageSize}");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var recipes = JsonConvert.DeserializeObject<List<ResultAllRecipeDto>>(jsonData);
+
+                ViewBag.CurrentPage = pageNumber;
+                ViewBag.PageSize = pageSize;
+                ViewBag.Author = authorName;
+                ViewBag.Baslik = "Yazar'a göre listelenmiş tarifler";
+
+                return View(recipes);
+
+            }
+
             return View();
         }
 

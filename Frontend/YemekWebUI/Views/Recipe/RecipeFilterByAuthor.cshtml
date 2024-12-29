@@ -1,47 +1,29 @@
 ﻿@model List<ResultAllRecipeDto>
 
+@{
+    ViewData["Title"] = "RecipeFilterByAuthor";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
 <div class="recepie_area plus_padding">
     <!-- Pagination Section -->
     <nav class="d-flex justify-content-center">
         <ul class="pagination">
             <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
-                <a class="page-link" href="?pageNumber=@(ViewBag.CurrentPage - 1)&pageSize=@ViewBag.PageSize">Önceki</a>
+                <a class="page-link" href="?authorName=@ViewBag.Author&pageNumber=@(ViewBag.CurrentPage - 1)&pageSize=@ViewBag.PageSize">Önceki</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="?pageNumber=@ViewBag.CurrentPage&pageSize=@ViewBag.PageSize">@ViewBag.CurrentPage</a>
+                <a class="page-link" href="?authorName=@ViewBag.Author&pageNumber=@ViewBag.CurrentPage&pageSize=@ViewBag.PageSize">@ViewBag.CurrentPage</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="?pageNumber=@(ViewBag.CurrentPage + 1)&pageSize=@ViewBag.PageSize">Sonraki</a>
+                <a class="page-link" href="?authorName=@ViewBag.Author&pageNumber=@(ViewBag.CurrentPage + 1)&pageSize=@ViewBag.PageSize">Sonraki</a>
             </li>
         </ul>
     </nav>
 
+
     <div class="container mt-4">
         <div class="row">
-            <div class="filter_area mb-4">
-                <form method="get" action="/Recipe/RecipeFilterByCategory">
-                    <div class="input-group">
-                        <!-- Kategori Adı Giriş Kutusu -->
-                        <input type="text" name="categoryName" class="form-control" placeholder="Kategori adı girin" aria-label="Kategori adı" aria-describedby="filter-button" required>
-
-                        <!-- Filtreleme Butonu -->
-                        <button class="btn btn-primary" type="submit" id="filter-button">Filtrele</button>
-                    </div>
-                </form>
-            </div>
-            <div class="filter_area mb-4">
-                <form method="get" action="/Recipe/RecipeFilterByAuthor">
-                    <div class="input-group">
-                        <!-- Kategori Adı Giriş Kutusu -->
-                        <input type="text" name="authorName" class="form-control" placeholder="Yazar adı girin" aria-label="Yazar adı" aria-describedby="filter-button" required>
-
-                        <!-- Filtreleme Butonu -->
-                        <button class="btn btn-primary" type="submit" id="filter-button">Filtrele</button>
-                    </div>
-                </form>
-            </div>
-
-
             @foreach (var item in Model)
             {
                 <div class="col-xl-4 col-lg-4 col-md-6 mb-4">
@@ -75,3 +57,5 @@
         </div>
     </div>
 </div>
+
+
