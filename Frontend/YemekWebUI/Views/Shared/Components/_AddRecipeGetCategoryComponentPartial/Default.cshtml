@@ -1,7 +1,6 @@
-﻿@model List<ResultAllCategoryDto>
-<div class="input-group-icon mt-10">
+﻿<div class="input-group-icon mt-10">
     <label for="category">Select Category</label>
-    <select class="form-select" id="category" name="CategoryId">
+    <select class="form-select w-75" id="category" name="CategoryId">
         @foreach (var item in Model)
         {
             <option value="@item.CategoryId">@item.Name</option>

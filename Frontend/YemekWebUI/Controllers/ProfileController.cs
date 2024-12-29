@@ -8,11 +8,13 @@ namespace YemekWebUI.Controllers
 
     public class ProfileController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber = 1, int pageSize = 6)
         {
             var userIdClaim = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
             ViewBag.userId= userIdClaim.Value;
-
+            ViewBag.Baslik = "Profil";
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.PageSize = pageSize;
             return View();
         }
     }

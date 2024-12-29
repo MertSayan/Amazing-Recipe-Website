@@ -29,7 +29,7 @@ namespace Application.Features.Mediatr.Recipes.Handlers.Read
                 RecipeId=x.RecipeID,
                 RecipeImageUrl=x.RecipeImageUrl,
                 Title=x.Title,
-                UserName=x.Title
+                UserName=x.User.Name,
             }).ToList();
         }
     }

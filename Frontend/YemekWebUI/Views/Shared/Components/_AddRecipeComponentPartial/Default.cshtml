@@ -1,29 +1,40 @@
 ﻿@model CreateRecipeDto
-<form id="createRecipeForm" asp-action="AddRecipe" method="post" enctype="multipart/form-data">
-    <div>
-        <label asp-for="Title"></label>
-        <input id="Title" asp-for="Title" class="form-control" required />
-        <span id="TitleError" class="text-danger"></span>
+<form id="createRecipeForm" asp-action="AddRecipe" method="post" enctype="multipart/form-data" class="container">
+    <div class="row">
+        <!-- Sol taraf -->
+        <div class="col-md-6">
+            <div>
+                <label asp-for="Title"></label>
+                <input id="Title" asp-for="Title" class="form-control"  />
+                <span id="TitleError" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Description"></label>
+                <textarea id="Description" asp-for="Description" class="form-control" ></textarea>
+                <span id="DescriptionError" class="text-danger"></span>
+            </div>
+
+            <input type="hidden" asp-for="UserId" class="form-control" value="@ViewBag.userId" />
+            
+            <div>
+                <label asp-for="RecipeImageUrl"></label>
+                <input asp-for="RecipeImageUrl" type="file" class="form-control" accept="image/*" />
+            </div>
+
+            @await Component.InvokeAsync("_AddRecipeGetCategoryComponentPartial")
+        </div>
+
+        <!-- Sağ taraf -->
+        <div class="col-md-6">
+            @await Component.InvokeAsync("_AddRecipeGetMaterialComponentPartial")
+        </div>
     </div>
 
-    <div>
-        <label asp-for="Description"></label>
-        <textarea id="Description" asp-for="Description" class="form-control" required></textarea>
-        <span id="DescriptionError" class="text-danger"></span>
-    </div>
-
-    <input type="hidden" asp-for="UserId" class="form-control" value="@ViewBag.userId" />
-
-    <div>
-        <label asp-for="RecipeImageUrl"></label>
-        <input asp-for="RecipeImageUrl" type="file" class="form-control" accept="image/*" />
-    </div>
-
-    @await Component.InvokeAsync("_AddRecipeGetCategoryComponentPartial");
-    @await Component.InvokeAsync("_AddRecipeGetMaterialComponentPartial");
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
 </form>
+
+
 
 <script>
     document.getElementById('createRecipeForm').addEventListener('submit', function (event) {
@@ -58,4 +69,19 @@
             event.preventDefault();
         }
     });
+
+    // /* Form elemanlarının genişliklerini ayarlama */
+    // #Title, #Description, #RecipeImageUrl, #category {
+    //     max - width: 75 %; /* Elemanları %75 genişlik ile sınırla */
+    // }
+
+    // /* Malzeme seçim alanını düzenleme */
+    // #materials {
+    //     gap: 10px; /* Checkbox'lar arasında boşluk */
+    // }
+
+    // #materials.form - check {
+    //     min - width: 150px; /* Checkbox genişliği */
+    // }
+
 </script>

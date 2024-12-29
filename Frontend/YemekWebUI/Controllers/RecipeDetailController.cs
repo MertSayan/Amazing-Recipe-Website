@@ -8,6 +8,7 @@ namespace YemekWebUI.Controllers
     {
         public IActionResult Index(int recipeId)
         {
+            ViewBag.Baslik = "Tarif Detayı";
             ViewBag.recipeId = recipeId;
             return View();
         }

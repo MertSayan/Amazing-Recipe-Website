@@ -8,6 +8,7 @@ namespace YemekWebUI.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.Baslik = "Hakkımızda";
             return View();
         }
     }

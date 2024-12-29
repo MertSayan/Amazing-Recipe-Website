@@ -13,5 +13,6 @@ namespace YemekUygulamasıDto.RecipeDtos
         public string Description { get; set; }
         public string RecipeImageUrl { get; set; }
         public string Username { get; set; }
+        public string CategoryName { get; set; }
     }
 }

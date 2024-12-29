@@ -13,7 +13,7 @@
     <!-- header-end -->
 
     <!-- slider_area_start -->
-    @await Component.InvokeAsync("_SliderUILayoutComponentPartial")
+    @await Component.InvokeAsync("_SliderUILayoutComponentPartial",new {baslik=ViewBag.Baslik})
     <!-- slider_area_end -->
 
     @RenderBody()

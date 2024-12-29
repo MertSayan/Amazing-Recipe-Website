@@ -12,6 +12,7 @@ namespace YemekWebUI.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.Baslik = "Muhteşem yemek tarifleri";
            return View();
         }
 

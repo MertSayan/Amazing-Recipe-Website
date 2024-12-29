@@ -1,11 +1,13 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/UILayout/Index.cshtml";
 }
 
-@await Component.InvokeAsync("_RecipeBannerComponentPartial");
+@* @await Component.InvokeAsync("_RecipeBannerComponentPartial");
+ *@
 
-@await Component.InvokeAsync("_AllRecipeComponentPartial");
+
+@await Component.InvokeAsync("_AllRecipeComponentPartial", new { pageNumber = ViewBag.CurrentPage, pageSize = ViewBag.PageSize });
+
 
 

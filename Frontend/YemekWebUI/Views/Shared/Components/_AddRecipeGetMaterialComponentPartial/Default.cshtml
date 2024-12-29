@@ -1,13 +1,12 @@
-﻿@model List<ResultAllMaterialDto>
-
-<div class="input-group-icon mt-10">
+﻿<div class="input-group-icon mt-10">
     <label for="materials">Select Materials</label>
-    <select class="form-select" id="materials" name="MaterialId" multiple>
+    <div id="materials" class="d-flex flex-wrap">
         @foreach (var item in Model)
         {
-            <option value="@item.MaterialId">@item.MaterialName</option>
+            <div class="form-check me-3">
+                <input class="form-check-input" type="checkbox" id="material_@item.MaterialId" name="MaterialId" value="@item.MaterialId">
+                <label class="form-check-label" for="material_@item.MaterialId">@item.MaterialName</label>
+            </div>
         }
-    </select>
+    </div>
 </div>
-
-

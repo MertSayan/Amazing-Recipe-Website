@@ -17,15 +17,18 @@ namespace YemekWebUI.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber = 1, int pageSize = 6)
         {
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.PageSize = pageSize;
+            ViewBag.Baslik = "Tarifler";
             return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> AddRecipe()
         {
-
+            ViewBag.Baslik = "Tarif Ekle";
             var userIdClaim = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
             ViewBag.userId = userIdClaim.Value;
             return View();
