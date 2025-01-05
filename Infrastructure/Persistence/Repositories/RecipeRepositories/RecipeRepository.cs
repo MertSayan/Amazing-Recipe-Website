@@ -1,4 +1,5 @@
-﻿using Application.Features.Mediatr.Categorys.Results;
+﻿using Application.Dtos;
+using Application.Features.Mediatr.Categorys.Results;
 using Application.Features.Mediatr.Recipes.Results;
 using Application.Interfaces.RecipeInterface;
 using Domain;
@@ -24,6 +25,11 @@ namespace Persistence.Repositories.RecipeRepositories
                 .Include(x=>x.User)
                 .ToListAsync();
             return recipes;
+        }
+
+        public Task<IQueryable<Recipe>> GetAllRecipes()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<List<Recipe>> GetPagedRecipeAsync(int pageNumber, int pageSize)
@@ -99,6 +105,50 @@ namespace Persistence.Repositories.RecipeRepositories
             return result;
         }
 
+        public async Task<PagedListDto> GetRecipes(RecipeListeleInput input)
+        {
+            var recipes = _context.Set<Recipe>()
+                .OrderBy(x => x.Title)
+                .Include(x=>x.Category)
+                .Include(x=>x.User)
+                .AsQueryable();
+
+            var totalRecords = recipes.Count();
+
+            recipes = recipes
+                .WhereIf(!string.IsNullOrEmpty(input.Title), x => x.Title.ToLower().Contains(input.Title.ToLower()))
+                .WhereIf(!string.IsNullOrEmpty(input.CategoryName), x => x.Category.Name.ToLower().Contains(input.CategoryName.ToLower()))
+                .WhereIf(!string.IsNullOrEmpty(input.UserName), x => x.User.Name.ToLower().Contains(input.UserName.ToLower()))
+                .WhereIf(!string.IsNullOrEmpty(input.Search.Value), x => x.Title.Contains(input.Search.Value) || x.Category.Name.Contains(input.Search.Value)
+                    || x.User.Name.Contains(input.Search.Value));
+
+
+            var filteredRecords = recipes.Count();
+
+            var result= await recipes
+                .Skip(input.Start)
+                .Take(input.Length)
+                .Select(x=> new GetRecipeForAdminQueryResult
+                {
+                    Title = x.Title,
+                    CategoryName=x.Category.Name,
+                    Description = x.Description,
+                    RecipeId=x.RecipeID,
+                    RecipeImageUrl=x.RecipeImageUrl,
+                    UserName=x.User.Name,
+                })
+                .ToListAsync();
+
+            return new PagedListDto
+            {
+                Data=result,
+                Draw=input.Draw,
+                RecordsTotal=totalRecords,
+                RecordsFiltered=filteredRecords
+            };
+
+        }
+
         public async Task<List<GetTopRatedRecipeQueryResult>> GetTopRatedRecipes(int topCount)
         {
             var topRecipes = await _context.Rates
@@ -128,5 +178,7 @@ namespace Persistence.Repositories.RecipeRepositories
 
             return topRecipes;
         }
+
+        
     }
 }

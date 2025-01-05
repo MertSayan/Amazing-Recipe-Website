@@ -50,6 +50,16 @@ namespace WebApi
             builder.Services.AddScoped(typeof(IRecipeRepository), typeof(RecipeRepository));
             builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 
+
+            builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                // Döngüsel referanslarý engelle
+                options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+            });
+
+
+
             builder.Services.AddSaveApplicationService();
 
             builder.Services.AddControllers().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<CreateUserValidator>

@@ -1,4 +1,7 @@
+using Application.Interfaces.RecipeInterface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Persistence.Context;
+using Persistence.Repositories.RecipeRepositories;
 
 namespace YemekWebUI
 {
@@ -9,6 +12,10 @@ namespace YemekWebUI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddScoped<YemekContext>();
+            builder.Services.AddScoped(typeof(IRecipeRepository), typeof(RecipeRepository));
+
+
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpClient();
 
@@ -23,6 +30,8 @@ namespace YemekWebUI
                     opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
                     opt.Cookie.Name = "YemekUygulamasiJwt";
                 });
+
+
 
 
             var app = builder.Build();

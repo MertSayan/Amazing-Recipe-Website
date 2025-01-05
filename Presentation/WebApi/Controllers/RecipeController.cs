@@ -1,6 +1,9 @@
 ﻿using Application.Constants;
+using Application.Dtos;
 using Application.Features.Mediatr.Recipes.Commands;
+using Application.Features.Mediatr.Recipes.Handlers.Read;
 using Application.Features.Mediatr.Recipes.Queries;
+using Application.Interfaces.RecipeInterface;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -13,10 +16,13 @@ namespace WebApi.Controllers
     public class RecipeController : ControllerBase
     {
         IMediator _mediator;
+        private readonly IRecipeRepository _recipeRepository;
 
-        public RecipeController(IMediator mediator)
+
+        public RecipeController(IMediator mediator, IRecipeRepository recipeRepository)
         {
             _mediator = mediator;
+            _recipeRepository = recipeRepository;
         }
 
         [HttpGet]
@@ -76,7 +82,21 @@ namespace WebApi.Controllers
             var values = await _mediator.Send(new GetPagedRecipeByAuthorQuery(pageNumber, pageSize,authorName));
             return Ok(values);
         }
-        
+
+        [NonAction]
+        [HttpGet("deneme")]
+        public async Task<IActionResult> Deneme([FromQuery] RecipeListeleInput? input)
+        {
+            var recipes = await _recipeRepository.GetRecipes(input);
+            return Ok(recipes);
+        }
+        [HttpPost("RecipeJqueryTable")]
+        public async Task<IActionResult> RecipeJqueryTable([FromBody] RecipeListeleInput input)
+        {
+           var recipes=await _recipeRepository.GetRecipes(input);
+            return Ok(recipes);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateRecipe([FromForm]CreateRecipeCommand command)
         {

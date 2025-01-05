@@ -1,0 +1,204 @@
+﻿@* @model List<ResultAllRecipeForAdminDto>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Recipe Listesi</title>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+</head>
+<body>
+    <div class="container">
+        <h3>Recipe Listesi</h3>
+
+        <!-- Filtreleme Alanları -->
+        <div>
+            <input id="title" type="text" placeholder="Title filtre" class="form-control" />
+            <input id="category" type="text" placeholder="Category filtre" class="form-control" />
+            <input id="user" type="text" placeholder="User filtre" class="form-control" />
+            <button id="btnYenile" class="btn btn-primary">Yenile</button>
+        </div>
+
+        <!-- DataTable -->
+        <table id="recipeTable" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Recipe Id</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>User</th>
+                    <th>Description</th>
+                    <th>RecipeImageUrl</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <!-- jQuery ve DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // DataTable Tanımlama
+            var table = $('#recipeTable').DataTable({
+                "serverSide": true,
+                "processing": true,
+                "ajax": {
+                    "url": "/Deneme/RecipeListele",
+                    "type": "POST",
+                    "data": function (d) {
+                        // Filtreleme Inputlarından Verileri Oku
+                        d.Title = $('#title').val();
+                        d.CategoryName = $('#category').val();
+                        d.UserName = $('#user').val();
+                    }
+                },
+                "columns": [
+                    { "data": "recipeId" },
+                    { "data": "title" },
+                    { "data": "categoryName" },
+                    { "data": "username" },
+                    { "data": "description" },
+                    { "data": "recipeImageUrl" }
+                ]
+            });
+
+            // Yenile Butonu
+            $('#btnYenile').click(function () {
+                table.ajax.reload(); // Tabloyu Yeniden Yükle
+            });
+        });
+    </script>
+</body>
+</html>
+ *@
+
+
+@model List<ResultAllRecipeForAdminDto>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Recipe Listesi</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <style>
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Başlık -->
+        <div class="text-center mb-4">
+            <h1 class="display-6">Recipe Listesi</h1>
+            <p class="text-muted">Tüm tariflerin detaylarını burada görüntüleyebilirsiniz.</p>
+        </div>
+
+        <!-- Filtreleme Alanları -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Filtreleme</h5>
+                <form class="row g-3">
+                    <div class="col-md-4">
+                        <input id="title" type="text" class="form-control" placeholder="Title filtre" />
+                    </div>
+                    <div class="col-md-4">
+                        <input id="category" type="text" class="form-control" placeholder="Category filtre" />
+                    </div>
+                    <div class="col-md-4">
+                        <input id="user" type="text" class="form-control" placeholder="User filtre" />
+                    </div>
+                    <div class="col-12 text-end">
+                        <button id="btnYenile" class="btn btn-primary">Yenile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- DataTable -->
+        <div class="table-responsive">
+            <table id="recipeTable" class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Recipe Id</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>User</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!-- Bootstrap, jQuery ve DataTables JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // DataTable Tanımlama
+            var table = $('#recipeTable').DataTable({
+                "serverSide": true,
+                "processing": true,
+                "ajax": {
+                    "url": "/Deneme/RecipeListele",
+                    "type": "POST",
+                    "data": function (d) {
+                        // Filtreleme Inputlarından Verileri Oku
+                        d.Title = $('#title').val();
+                        d.CategoryName = $('#category').val();
+                        d.UserName = $('#user').val();
+                    }
+                },
+                "columns": [
+                    { "data": "recipeId" },
+                    {
+                        "data": "recipeImageUrl",
+                        "render": function (data, type, row) {
+                            return `<img src="${data}" class="thumbnail" alt="Recipe Image" />`;
+                        }
+                    },
+                    { "data": "title" },
+                    { "data": "categoryName" },
+                    { "data": "username" },
+                    {
+                        "data": "description",
+                        "render": function (data, type, row) {
+                            if (data.length > 30) {
+                                return data.substring(0, 30) + "..."; // 30 karakterle sınırla
+                            }
+                            return data; // Kısa açıklamaları olduğu gibi döndür
+                        }
+                    }
+                ]
+            });
+
+            // Yenile Butonu
+            $('#btnYenile').click(function () {
+                table.ajax.reload(); // Tabloyu Yeniden Yükle
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,11 +1,7 @@
-﻿using Application.Features.Mediatr.Categorys.Results;
+﻿using Application.Dtos;
+using Application.Features.Mediatr.Categorys.Results;
 using Application.Features.Mediatr.Recipes.Results;
 using Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Interfaces.RecipeInterface
 {
@@ -23,6 +19,8 @@ namespace Application.Interfaces.RecipeInterface
 
         Task<List<Recipe>> GetPagedRecipeByCategoryAsync(int pageNumber, int pageSize,string categoryName);
         Task<List<Recipe>> GetPagedRecipeByAuthorAsync(int pageNumber, int pageSize,string authorName);
+
+        Task<PagedListDto> GetRecipes(RecipeListeleInput input);
 
     }
 }

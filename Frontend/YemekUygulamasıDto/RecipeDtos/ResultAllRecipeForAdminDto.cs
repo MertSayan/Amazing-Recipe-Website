@@ -15,5 +15,14 @@ namespace YemekUygulamasıDto.RecipeDtos
         public string Username { get; set; }
 
         public string CategoryName { get; set; }
+
+    }
+
+    public class RecipeResponse
+    {
+        public int Draw { get; set; }
+        public int RecordsTotal { get; set; }
+        public int RecordsFiltered { get; set; }
+        public List<ResultAllRecipeForAdminDto>? Data { get; set; }
     }
 }
