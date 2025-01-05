@@ -38,6 +38,7 @@ namespace Persistence.Repositories.RecipeRepositories
                 .ToListAsync();
         }
 
+
         public async Task<List<Recipe>> GetPagedRecipeByAuthorAsync(int pageNumber, int pageSize, string authorName)
         {
             return await _context.Recipes
@@ -46,7 +47,7 @@ namespace Persistence.Repositories.RecipeRepositories
                .Include(x => x.Category)
                .Where(x => x.User.Name == authorName)
                .OrderBy(x => x.CreatedDate)
-               .Skip((pageNumber - 1) * pageSize)
+               .Skip((pageNumber - 1) * pageSize) // sayfa 2 den başlamak istersen 2-1*6 dan mesela 1 sayfa kadar veriyi ( 6 veri) atlayıp döndürüyor :)
                .Take(pageSize)
                .ToListAsync();
         }
