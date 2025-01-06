@@ -4,7 +4,7 @@ using System.Security.Claims;
 
 namespace YemekWebUI.Controllers
 {
-    [Authorize(Roles = "Kullanıcı")]
+    [Authorize(Roles = "Kullanıcı,Admin")]
 
     public class ProfileController : Controller
     {

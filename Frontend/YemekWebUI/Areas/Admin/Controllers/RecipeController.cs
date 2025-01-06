@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Drawing.Printing;
 using YemekUygulamasıDto.RecipeDtos;
@@ -7,6 +8,7 @@ namespace YemekWebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/Recipe")]
+    [Authorize(Roles = "Admin")]
     public class RecipeController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

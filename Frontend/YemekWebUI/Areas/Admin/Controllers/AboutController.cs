@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Drawing.Text;
 using System.Text;
@@ -8,6 +9,7 @@ namespace YemekWebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/About")]
+    [Authorize(Roles="Admin")]
     public class AboutController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using System.Text;
-using YemekUygulamasıDto.RegisterDtos;
 using YemekUygulamasıDto.UserDtos;
 
 namespace YemekWebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/User")]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

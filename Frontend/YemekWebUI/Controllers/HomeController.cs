@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace YemekWebUI.Controllers
 {
-    [Authorize(Roles = "Kullanıcı")]
+    [Authorize(Roles = "Kullanıcı,Admin")]
 
     public class HomeController : Controller
     {

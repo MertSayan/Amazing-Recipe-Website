@@ -31,37 +31,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="profile-container text-center">
-            <img src="@Model.UserImageUrl" alt="User Image" class="profile-img">
-            <h3>@Model.Name @Model.Surname</h3>
-            <div class="profile-info text-left mt-4">
-                @* <div class="form-group">
-                    <label>User ID:</label>
-                    <p>@Model.UserId</p>
-                </div> *@
-
-                <div class="form-group">
-                    <label>Email:</label>
-                    <p>@Model.Email</p>
-                </div>
-                <div class="form-group">
-                    <label>Şifre:</label>
-                    <p>@Model.Password</p>
-                </div>
-                <div class="form-group">
-                    <label>Telefon:</label>
-                    <p>@Model.Phone</p>
-                </div>
-                <div class="form-group">
-                    <label>Birth Date:</label>
-                    <p>@DateTime.Parse(Model.BirthDate, CultureInfo.InvariantCulture).ToString("dd-MM-yyyy")</p>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
+    @Html.UserProfileCard(Model)
 </body>
 </html>
 

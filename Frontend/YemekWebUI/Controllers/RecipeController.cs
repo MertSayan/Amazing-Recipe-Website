@@ -7,7 +7,7 @@ using YemekUygulamasıDto.RecipeDtos;
 
 namespace YemekWebUI.Controllers
 {
-    [Authorize(Roles = "Kullanıcı")]
+    [Authorize(Roles = "Kullanıcı,Admin")]
 
     public class RecipeController : Controller
     {
