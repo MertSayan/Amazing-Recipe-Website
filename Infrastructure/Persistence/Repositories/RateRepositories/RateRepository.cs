@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.RateInterface;
+﻿using Application.Features.Mediatr.Rates.Results;
+using Application.Interfaces.RateInterface;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
@@ -20,6 +21,8 @@ namespace Persistence.Repositories.RateRepositories
             _context = context;
         }
 
+       
+
         public async Task<List<Rate>> GetByFilterAsync(Expression<Func<Rate, bool>> filter)
         {
             var values = await _context.Rates
@@ -29,5 +32,23 @@ namespace Persistence.Repositories.RateRepositories
                 .ToListAsync();
             return values;
         }
+
+        public async Task<GetTotalRateValueByRecipeIdQueryResult> GetTotalRateScore(int recipeId)
+        {
+            // RecipeId'ye göre verileri filtrele
+            var scores = await _context.Rates
+                .Where(rate => rate.RecipeId == recipeId && rate.DeletedDate==null)
+                .Select(rate => rate.Score)
+                .ToListAsync(); // Verileri bellek içi koleksiyona al
+
+            // Eğer veri varsa ortalama hesapla, yoksa sıfır döndür
+            var averageScore = scores.Any() ? scores.Average() : 0;
+
+            return new GetTotalRateValueByRecipeIdQueryResult
+            {
+                Score = Math.Round(averageScore,2)
+            };
+        }
+
     }
 }

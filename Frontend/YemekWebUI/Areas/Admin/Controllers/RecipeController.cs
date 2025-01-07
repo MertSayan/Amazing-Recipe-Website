@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Application.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Drawing.Printing;
+using System.Text;
 using YemekUygulamasıDto.RecipeDtos;
 
 namespace YemekWebUI.Areas.Admin.Controllers
@@ -41,9 +43,42 @@ namespace YemekWebUI.Areas.Admin.Controllers
             var responseMessage = await client.DeleteAsync($"https://localhost:7092/api/Recipe?id=" + id);
             if(responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index", "Recipe", new {area="Admin"});
+                return RedirectToAction("DataTableIndex", "Recipe", new {area="Admin"});
             }
             return View();
+        }
+
+        [Route("DataTableIndex")]
+        [HttpGet]
+        public IActionResult DataTableIndex()
+        {
+            return View();
+        }
+
+        [Route("DataTable")]
+        [HttpPost]
+        public async Task<IActionResult> DataTable(RecipeListeleInput input)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var jsonData = JsonConvert.SerializeObject(input);
+            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var responseMessage = await client.PostAsync("https://localhost:7092/api/Recipe/RecipeJqueryTable", content);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var responseContent = await responseMessage.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<RecipeResponse>(responseContent);
+
+                return Json(new
+                {
+                    draw = input.Draw,
+                    recordsTotal = data.RecordsTotal, // Toplam Kayıt Sayısı
+                    recordsFiltered = data.RecordsFiltered, // Filtrelenmiş Kayıt Sayısı
+                    data = data.Data // Gösterilecek Veri
+                });
+            }
+
+            return View();
+
         }
 
     }

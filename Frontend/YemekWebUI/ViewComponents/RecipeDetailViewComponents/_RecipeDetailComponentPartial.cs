@@ -15,6 +15,7 @@ namespace YemekWebUI.ViewComponents.RecipeDetailViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(int id)
         {
+            ViewBag.recipeId = id;
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync("https://localhost:7092/api/Recipe/RecipeById?id="+id);
             if(responseMessage.IsSuccessStatusCode)

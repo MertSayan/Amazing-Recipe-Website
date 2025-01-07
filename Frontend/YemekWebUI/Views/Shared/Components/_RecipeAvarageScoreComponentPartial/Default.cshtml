@@ -1,0 +1,27 @@
+﻿@model AvarageScoreDto
+
+<div class="card text-center shadow-sm mb-3">
+    <div class="card-header">
+        <h2 class="mb-0">Recipe Average Score</h2>
+    </div>
+    <div class="card-body">
+        @if (Model != null && Model.Score > 0)
+        {
+            <h1 class="display-4 text-warning"> 
+                @Model.Score.ToString("F2") / 5
+            </h1>
+            <p class="text-muted">
+                Kullanıcıların yaptığı puanlama sonucu
+            </p>
+        }
+        else
+        {
+            <h4 class="text-muted">
+                Henüz puanlama yok
+            </h4>
+        }
+    </div>
+    <div class="card-footer text-muted">
+        Updated: @DateTime.Now.ToString("MMMM dd, yyyy HH:mm")
+    </div>
+</div>

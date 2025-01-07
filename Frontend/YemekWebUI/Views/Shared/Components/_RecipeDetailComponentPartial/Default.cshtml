@@ -10,8 +10,6 @@
             <div class="col-xl-6 col-md-6">
                 <div class="recepies_info">
                     <h3>@Model.Title</h3>
-@*                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
- *@
                     <div class="resepies_details">
                         <ul>
                             <li><p><strong>Rating</strong> : <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </p></li>
@@ -29,11 +27,6 @@
                             </li>
                         </ul>
                     </div>
-                   @*  <div class="links">
-                        <a href="#"> <i class="fa fa-facebook"></i> </a>
-                        <a href="#"> <i class="fa fa-twitter"></i> </a>
-                        <a href="#"> <i class="fa fa-linkedin"></i> </a>
-                    </div> *@
                 </div>
             </div>
         </div>
@@ -42,6 +35,14 @@
                 <div class="recepies_text">
                     <p>@Model.Description</p>
                 </div>
+            </div>
+        </div>
+        <!-- Puanlama Butonu -->
+        <div class="row mt-4">
+            <div class="col-xl-12 text-center">
+                <a href="@Url.Action("Rate", "RecipeDetail", new { recipeId = ViewBag.recipeId })" class="btn btn-primary">
+                    Tarif Puanla
+                </a>
             </div>
         </div>
     </div>

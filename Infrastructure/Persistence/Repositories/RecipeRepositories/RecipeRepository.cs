@@ -108,6 +108,7 @@ namespace Persistence.Repositories.RecipeRepositories
         public async Task<PagedListDto> GetRecipes(RecipeListeleInput input)
         {
             var recipes = _context.Set<Recipe>()
+                .Where(x=>x.DeletedDate==null)
                 .OrderBy(x => x.Title)
                 .Include(x=>x.Category)
                 .Include(x=>x.User)

@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application.Features.Mediatr.Rates.Results;
+using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,8 @@ namespace Application.Interfaces.RateInterface
     public interface IRateRepository
     {
         Task<List<Rate>> GetByFilterAsync(Expression<Func<Rate, bool>> filter);
+
+        Task<GetTotalRateValueByRecipeIdQueryResult> GetTotalRateScore(int recipeId);
+
     }
 }

@@ -4,7 +4,10 @@
     Layout = "~/Views/UILayout/Index.cshtml";
 }
 
-@await Component.InvokeAsync("_RecipeDetailBannerComponentPartial");
-@await Component.InvokeAsync("_RecipeDetailComponentPartial", new { id = ViewBag.recipeId });
+@* @await Component.InvokeAsync("_RecipeDetailBannerComponentPartial");
+ *@
+ @await Component.InvokeAsync("_RecipeDetailComponentPartial", new { id = ViewBag.recipeId });
+ @await Component.InvokeAsync("_RecipeAvarageScoreComponentPartial", new { id = ViewBag.recipeId });
+ 
 
 

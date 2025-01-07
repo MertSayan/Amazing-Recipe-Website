@@ -1,4 +1,4 @@
-﻿using Azure.Core;
+﻿//using Azure.Core;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
