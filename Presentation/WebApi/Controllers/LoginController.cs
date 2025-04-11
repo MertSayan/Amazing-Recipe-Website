@@ -3,8 +3,8 @@ using Application.Features.Mediatr.Users.Queries;
 using Application.Tools;
 using Domain;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace WebApi.Controllers
 {

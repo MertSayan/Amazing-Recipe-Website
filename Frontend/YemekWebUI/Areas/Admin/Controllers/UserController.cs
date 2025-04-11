@@ -12,17 +12,20 @@ namespace YemekWebUI.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public UserController(IHttpClientFactory httpClientFactory)
+        private readonly IConfiguration _configuration;
+        public UserController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
         }
 
         [Route("Index")]
         public async Task<IActionResult> Index(int pageNumber=1,int pageSize=10)
         {
             var client=_httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7092/api/User/GetPagedUser?pageNumber={pageNumber}&pageSize={pageSize}");
+            //var responseMessage = await client.GetAsync($"https://localhost:7092/api/User/GetPagedUser?pageNumber={pageNumber}&pageSize={pageSize}");
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.GetAsync($"{apiBaseUrl}/api/User/GetPagedUser?pageNumber={pageNumber}&pageSize={pageSize}");
             if(responseMessage.IsSuccessStatusCode)
             {
                 var jsonData=await responseMessage.Content.ReadAsStringAsync();
@@ -39,7 +42,9 @@ namespace YemekWebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateUser(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7092/api/User/GetUserByIdWithOutPassword{id}");
+            //var responseMessage = await client.GetAsync($"https://localhost:7092/api/User/GetUserByIdWithOutPassword{id}");
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.GetAsync($"{apiBaseUrl}/api/User/GetUserByIdWithOutPassword{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -75,7 +80,9 @@ namespace YemekWebUI.Areas.Admin.Controllers
                 formData.Add(fileContent, "UserImageUrl", updateUserDto.UserImageUrl.FileName); // API'deki ile aynı ismi kullanın
             }
 
-            var responseMessage = await client.PutAsync("https://localhost:7092/api/User",formData);
+            //var responseMessage = await client.PutAsync("https://localhost:7092/api/User",formData);
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.PutAsync($"{apiBaseUrl}/api/User",formData);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "User", new {area="Admin"});
@@ -117,7 +124,9 @@ namespace YemekWebUI.Areas.Admin.Controllers
                 formData.Add(fileContent, "UserImageUrl", dto.UserImageUrl.FileName); // API'deki ile aynı ismi kullanın
             }
 
-            var responseMessage = await client.PostAsync("https://localhost:7092/api/User", formData);
+            //var responseMessage = await client.PostAsync("https://localhost:7092/api/User", formData);
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.PostAsync($"{apiBaseUrl}/api/User", formData);
 
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -132,7 +141,9 @@ namespace YemekWebUI.Areas.Admin.Controllers
         public async Task<IActionResult> RemoveUser(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.DeleteAsync("https://localhost:7092/api/User?id="+id);
+            //var responseMessage = await client.DeleteAsync("https://localhost:7092/api/User?id="+id);
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.DeleteAsync($"{apiBaseUrl}/api/User?id="+id);
             if(responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "User", new { area = "Admin" });

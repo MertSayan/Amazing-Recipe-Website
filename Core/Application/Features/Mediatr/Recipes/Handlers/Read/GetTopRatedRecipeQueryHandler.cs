@@ -11,8 +11,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Mediatr.Recipes.Handlers.Read
 {
-    public class GetTopRatedRecipeQueryHandler:IRequestHandler<GetTopRatedRecipeQuery,List<GetTopRatedRecipeQueryResult>>
+    public class GetTopRatedRecipeQueryHandler : IRequestHandler<GetTopRatedRecipeQuery, List<GetTopRatedRecipeQueryResult>>
     {
+
         private readonly IRecipeRepository _repository;
 
         public GetTopRatedRecipeQueryHandler(IRecipeRepository repository)
@@ -20,11 +21,16 @@ namespace Application.Features.Mediatr.Recipes.Handlers.Read
             _repository = repository;
         }
 
-
-        public Task<List<GetTopRatedRecipeQueryResult>> Handle(GetTopRatedRecipeQuery request, CancellationToken cancellationToken)
+        public async Task<List<GetTopRatedRecipeQueryResult>> Handle(GetTopRatedRecipeQuery request, CancellationToken cancellationToken)
         {
-            var topRecipes = _repository.GetTopRatedRecipes(3); // En yüksek 3 tarifi çekiyoruz
-            return topRecipes;
+            var users = await _repository.GetTopRatedRecipes(request.Count);
+            return users.Select(x => new GetTopRatedRecipeQueryResult
+            {
+                Description = x.Description,
+                RecipeId = x.RecipeId,
+                RecipeImageUrl = x.RecipeImageUrl,
+                Title=x.Title
+            }).ToList();
         }
     }
 }

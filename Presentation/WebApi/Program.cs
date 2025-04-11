@@ -58,6 +58,18 @@ namespace WebApi
                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
             });
 
+            //api yayýnladýktan sonra ekledim bunu.
+
+            //builder.Services.AddCors(options =>
+            //{
+            //    options.AddDefaultPolicy(policy =>
+            //    {
+            //        policy.WithOrigins("http://www.Recipes.somee.com") // MVC'nin çalýþtýðý adresi buraya ekleyin.
+            //              .AllowAnyMethod()
+            //              .AllowAnyHeader();
+            //    });
+            //});
+
 
 
             builder.Services.AddSaveApplicationService();

@@ -13,17 +13,21 @@ namespace YemekWebUI.Areas.Admin.Controllers
     public class AboutController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration;
 
-        public AboutController(IHttpClientFactory httpClientFactory)
+        public AboutController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
         }
 
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
             var client=_httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7092/api/About");
+            //var responseMessage = await client.GetAsync("https://localhost:7092/api/About");
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.GetAsync($"{apiBaseUrl}/api/About");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData=await responseMessage.Content.ReadAsStringAsync();
@@ -39,7 +43,10 @@ namespace YemekWebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateAbout(int id)
         {
             var client=_httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7092/api/About/ById?id="+id);
+            //var responseMessage = await client.GetAsync("https://localhost:7092/api/About/ById?id="+id);
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.GetAsync($"{apiBaseUrl}/api/About/ById?id="+id);
+
             if(responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -56,7 +63,9 @@ namespace YemekWebUI.Areas.Admin.Controllers
             var client=_httpClientFactory.CreateClient();
             var jsonData=JsonConvert.SerializeObject(updateAboutDto);
             StringContent content=new StringContent(jsonData,Encoding.UTF8,"application/json");
-            var responseMessage = await client.PutAsync("https://localhost:7092/api/About",content);
+            //var responseMessage = await client.PutAsync("https://localhost:7092/api/About",content);
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.PutAsync($"{apiBaseUrl}/api/About",content);
             if(responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "About", new { area = "Admin" });

@@ -13,10 +13,11 @@ namespace YemekWebUI.Controllers
     public class LoginController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public LoginController(IHttpClientFactory httpClientFactory)
+        private readonly IConfiguration _configuration;
+        public LoginController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -29,7 +30,9 @@ namespace YemekWebUI.Controllers
         {
             var client = _httpClientFactory.CreateClient();
             var content = new StringContent(JsonSerializer.Serialize(createLoginDto), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7092/api/Login", content);
+            //var response = await client.PostAsync("https://localhost:7092/api/Login", content);
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var response = await client.PostAsync($"{apiBaseUrl}/api/Login", content);
             if (response.IsSuccessStatusCode)
             {
                 var jsonData = await response.Content.ReadAsStringAsync();

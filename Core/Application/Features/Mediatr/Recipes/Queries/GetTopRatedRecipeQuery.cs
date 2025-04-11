@@ -10,5 +10,11 @@ namespace Application.Features.Mediatr.Recipes.Queries
 {
     public class GetTopRatedRecipeQuery:IRequest<List<GetTopRatedRecipeQueryResult>>
     {
+        public int Count { get; set; }
+
+        public GetTopRatedRecipeQuery(int count)
+        {
+            Count = count;
+        }
     }
 }

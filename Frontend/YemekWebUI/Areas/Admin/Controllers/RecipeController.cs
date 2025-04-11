@@ -14,17 +14,21 @@ namespace YemekWebUI.Areas.Admin.Controllers
     public class RecipeController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration;
 
-        public RecipeController(IHttpClientFactory httpClientFactory)
+        public RecipeController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
         }
 
         [Route("Index")]
         public async  Task<IActionResult> Index(int pageNumber=1,int pageSize=3)
         {
             var client=_httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7092/api/Recipe/GetPagedRecipe?pageNumber={pageNumber}&pageSize={pageSize}");
+            //var responseMessage = await client.GetAsync($"https://localhost:7092/api/Recipe/GetPagedRecipe?pageNumber={pageNumber}&pageSize={pageSize}");
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.GetAsync($"{apiBaseUrl}/api/Recipe/GetPagedRecipe?pageNumber={pageNumber}&pageSize={pageSize}");
             if(responseMessage.IsSuccessStatusCode)
             {
                 var jsonData=await responseMessage.Content.ReadAsStringAsync();
@@ -40,7 +44,9 @@ namespace YemekWebUI.Areas.Admin.Controllers
         public async Task<IActionResult> RemoveRecipe(int id)
         {
             var client =_httpClientFactory.CreateClient();
-            var responseMessage = await client.DeleteAsync($"https://localhost:7092/api/Recipe?id=" + id);
+            //var responseMessage = await client.DeleteAsync($"https://localhost:7092/api/Recipe?id=" + id);
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.DeleteAsync($"{apiBaseUrl}/api/Recipe?id=" + id);
             if(responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("DataTableIndex", "Recipe", new {area="Admin"});
@@ -62,7 +68,9 @@ namespace YemekWebUI.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(input);
             StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:7092/api/Recipe/RecipeJqueryTable", content);
+            //var responseMessage = await client.PostAsync("https://localhost:7092/api/Recipe/RecipeJqueryTable", content);
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.PostAsync($"{apiBaseUrl}/api/Recipe/RecipeJqueryTable", content);
             if (responseMessage.IsSuccessStatusCode)
             {
                 var responseContent = await responseMessage.Content.ReadAsStringAsync();

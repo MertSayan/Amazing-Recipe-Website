@@ -12,10 +12,12 @@ namespace YemekWebUI.Controllers
     public class RegisterController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration; // IConfiguration'ı tanımlayın
 
-        public RegisterController(IHttpClientFactory httpClientFactory)
+        public RegisterController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -50,7 +52,12 @@ namespace YemekWebUI.Controllers
             }
 
             // API'ye POST isteğini gönderin
-            var responseMessage = await client.PostAsync("https://localhost:7092/api/User", formData);
+            //var responseMessage = await client.PostAsync("http://www.YEMEKAPI.somee.com/api/User", formData);
+            //var responseMessage = await client.PostAsync("https://localhost:7092/api/User", formData);
+
+
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.PostAsync($"{apiBaseUrl}/api/User", formData);
 
             if (responseMessage.IsSuccessStatusCode)
             {

@@ -12,10 +12,12 @@ namespace YemekWebUI.Controllers
     public class RecipeController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration; // IConfiguration'ı tanımlayın
 
-        public RecipeController(IHttpClientFactory httpClientFactory)
+        public RecipeController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
         }
 
         public IActionResult Index(int pageNumber = 1, int pageSize = 6)
@@ -30,7 +32,14 @@ namespace YemekWebUI.Controllers
         public async Task<IActionResult> RecipeFilterByCategory(string categoryName,int pageNumber = 1, int pageSize = 6)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7092/api/Recipe/GetPagedRecipeByCategory?categoryName={categoryName}&pageNumber={pageNumber}&pageSize={pageSize}");
+
+            //var responseMessage = await client.GetAsync($"http://www.YEMEKAPI.somee.com/api/Recipe/GetPagedRecipeByCategory?categoryName={categoryName}&pageNumber={pageNumber}&pageSize={pageSize}");
+            //var responseMessage = await client.GetAsync($"https://localhost:7092/api/Recipe/GetPagedRecipeByCategory?categoryName={categoryName}&pageNumber={pageNumber}&pageSize={pageSize}");
+
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.GetAsync($"{apiBaseUrl}/api/Recipe/GetPagedRecipeByCategory?categoryName={categoryName}&pageNumber={pageNumber}&pageSize={pageSize}");
+
+
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData=await responseMessage.Content.ReadAsStringAsync();
@@ -51,7 +60,8 @@ namespace YemekWebUI.Controllers
         public async Task<IActionResult> RecipeFilterByAuthor(string authorName, int pageNumber = 1, int pageSize = 6)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7092/api/Recipe/GetPagedRecipeByAuthor?authorName={authorName}&pageNumber={pageNumber}&pageSize={pageSize}");
+            var responseMessage = await client.GetAsync($"http://www.YEMEKAPI.somee.com/api/Recipe/GetPagedRecipeByAuthor?authorName={authorName}&pageNumber={pageNumber}&pageSize={pageSize}");
+            //var responseMessage = await client.GetAsync($"https://localhost:7092/api/Recipe/GetPagedRecipeByAuthor?authorName={authorName}&pageNumber={pageNumber}&pageSize={pageSize}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -110,6 +120,7 @@ namespace YemekWebUI.Controllers
             }
 
             // API'ye POST isteği gönder
+            //var responseMessage = await client.PostAsync("http://www.YEMEKAPI.somee.com/api/Recipe", formData);
             var responseMessage = await client.PostAsync("https://localhost:7092/api/Recipe", formData);
 
             if (responseMessage.IsSuccessStatusCode)

@@ -34,12 +34,14 @@ namespace Persistence.Repositories.RecipeRepositories
 
         public async Task<List<Recipe>> GetPagedRecipeAsync(int pageNumber, int pageSize)
         {
+
+
             return await _context.Recipes
-                .Where(x=>x.DeletedDate==null)
-                .Include(x=>x.User)
-                .Include(x=>x.Category)
-                .OrderBy(x=>x.Category.Name)
-                .Skip((pageNumber - 1) * pageSize) 
+                .Where(x => x.DeletedDate == null)
+                .Include(x => x.User)
+                .Include(x => x.Category)
+                .OrderBy(x => x.Category.Name)
+                .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
         }
@@ -161,9 +163,7 @@ namespace Persistence.Repositories.RecipeRepositories
                 AverageScore = g.Average(r => r.Score) // Ortalama puanı hesaplama
             })
             .OrderByDescending(x => x.AverageScore) // En yüksekten en düşüğe sıralama
-            
             .Take(topCount) // İlk n tarif seçme
-            
             .Join(_context.Recipes.Where(x=>x.DeletedDate==null), // Recipe tablosu ile birleştirme
                   r => r.RecipeId,
                   recipe => recipe.RecipeID,
@@ -174,12 +174,8 @@ namespace Persistence.Repositories.RecipeRepositories
                       Description = recipe.Description,
                       RecipeImageUrl=recipe.RecipeImageUrl
                   })
-            
             .ToListAsync();
-
             return topRecipes;
-        }
-
-        
+        } 
     }
 }

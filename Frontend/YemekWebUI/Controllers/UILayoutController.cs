@@ -7,7 +7,6 @@ namespace YemekWebUI.Controllers
         public IActionResult Index()
         {
 
-
             return View();
         }
     }

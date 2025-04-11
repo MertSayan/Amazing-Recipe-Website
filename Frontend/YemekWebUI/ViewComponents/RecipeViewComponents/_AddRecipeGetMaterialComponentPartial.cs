@@ -8,15 +8,19 @@ namespace YemekWebUI.ViewComponents.RecipeViewComponents
 	public class _AddRecipeGetMaterialComponentPartial:ViewComponent
 	{
 		private readonly IHttpClientFactory _httpClientFactory;
-
-		public _AddRecipeGetMaterialComponentPartial(IHttpClientFactory httpClientFactory)
-		{
-			_httpClientFactory = httpClientFactory;
-		}
-		public async Task<IViewComponentResult> InvokeAsync()
+		private readonly IConfiguration _configuration;
+        public _AddRecipeGetMaterialComponentPartial(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        {
+            _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
+        }
+        public async Task<IViewComponentResult> InvokeAsync()
 		{
 			var client = _httpClientFactory.CreateClient();
-			var responseMessage = await client.GetAsync("https://localhost:7092/api/Material");
+            //var responseMessage = await client.GetAsync("http://www.YEMEKAPI.somee.com/api/Material");
+            //var responseMessage = await client.GetAsync("https://localhost:7092/api/Material");
+            var apiBaseUrl = _configuration["ApiBaseUrl"];
+            var responseMessage = await client.GetAsync($"{apiBaseUrl}/api/Material");
 			if (responseMessage.IsSuccessStatusCode)
 			{
 				var jsonData = await responseMessage.Content.ReadAsStringAsync();

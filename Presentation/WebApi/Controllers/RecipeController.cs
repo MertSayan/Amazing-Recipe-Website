@@ -38,9 +38,9 @@ namespace WebApi.Controllers
             return Ok(value);
         }
         [HttpGet("TopRatedRecipes")]
-        public async Task<IActionResult> GetTopRatedRecipes()
+        public async Task<IActionResult> GetTopRatedRecipes(int Count)
         {
-            var values = await _mediator.Send(new GetTopRatedRecipeQuery());
+            var values = await _mediator.Send(new GetTopRatedRecipeQuery(Count));
             return Ok(values);
         }
 
